@@ -3,6 +3,7 @@ import fs from "fs";
 import path from "path";
 import vue from "rollup-plugin-vue";
 import alias from "@rollup/plugin-alias";
+import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import replace from "@rollup/plugin-replace";
 import babel from "rollup-plugin-babel";
@@ -80,11 +81,12 @@ if (!argv.format || argv.format === "es") {
     external,
     output: {
       file: "dist/vue-turnjs.esm.js",
-      format: "esm",
-      exports: "named",
+      format: "es",
+      sourcemap: true,
     },
     plugins: [
       ...baseConfig.plugins.preVue,
+      resolve(),
       vue(baseConfig.plugins.vue),
       babel({
         ...baseConfig.plugins.babel,

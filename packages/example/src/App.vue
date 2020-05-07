@@ -2,7 +2,7 @@
   <div id="app">
     <div>
       <h1>Auto flip (Double display)</h1>
-      <turn id="flip-book" :auto="true">
+      <turn id="flip-book" :options="{ autoFlip: true }">
         <div class="flip_page_double hard">Turn.js</div>
         <div class="flip_page_double hard"></div>
         <div class="flip_page_double hard">Page 1</div>
@@ -28,7 +28,10 @@
     </div>
     <div>
       <h1>Auto flip. Single display</h1>
-      <turn id="flip-book" :options="{ display: 'single' }" :auto="true">
+      <turn
+        id="flip-book"
+        :options="{ display: 'single', autoFlip: true, autoFlipDelay: 4000 }"
+      >
         <div class="flip_page_single">Turn.js</div>
         <div class="flip_page_single"></div>
         <div class="flip_page_single">Page 1</div>

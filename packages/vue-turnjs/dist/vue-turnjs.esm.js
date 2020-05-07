@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import { nanoid } from 'nanoid';
+import crypto from 'crypto';
 
 /* turn.js 4.1.0 | Copyright (c) 2012 Emmanuel Garcia | turnjs.com | turnjs.com/license.txt */
 
@@ -1542,6 +1542,39 @@ import { nanoid } from 'nanoid';
   f.findPos = D;
 })($);
 
+let urlAlphabet =
+  '_-0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+// We reuse buffers with the same size to avoid memory fragmentations
+// for better performance.
+let buffers = { };
+let random = bytes => {
+  let buffer = buffers[bytes];
+  if (!buffer) {
+    // `Buffer.allocUnsafe()` is faster because it doesn’t flush the memory.
+    // Memory flushing is unnecessary since the buffer allocation itself resets
+    // the memory with the new bytes.
+    buffer = Buffer.allocUnsafe(bytes);
+    if (bytes <= 255) buffers[bytes] = buffer;
+  }
+  return crypto.randomFillSync(buffer)
+};
+
+let nanoid = (size = 21) => {
+  let bytes = random(size);
+  let id = '';
+  // A compact alternative for `for (var i = 0; i < step; i++)`.
+  while (size--) {
+    // It is incorrect to use bytes exceeding the alphabet size.
+    // The following mask reduces the random byte in the 0-255 value
+    // range to the 0-63 value range. Therefore, adding hacks, such
+    // as empty string fallback or magic numbers, is unneccessary because
+    // the bitmask trims bytes down to the alphabet size.
+    id += urlAlphabet[bytes[size] & 63];
+  }
+  return id
+};
+
 var script = {
   name: "Turn",
 
@@ -1562,10 +1595,6 @@ var script = {
     options: {
       type: Object,
       default: () => {}
-    },
-    auto: {
-      type: Boolean,
-      default: false
     }
   },
   watch: {
@@ -1594,6 +1623,8 @@ var script = {
         height: 600,
         display: "double",
         duration: 1800,
+        autoFlip: false,
+        autoFlipDelay: 2000,
         page: 1,
         when: {
           turning: (event, page, pageObj) => {
@@ -1617,23 +1648,22 @@ var script = {
   mounted() {
     $(`#${this.uid}`).turn(this.defaultOptions);
 
-    if (this.auto) {
+    if (this.defaultOptions.autoFlip) {
       this.setIntervalId = setInterval(() => {
         this.currentPage++;
-      }, 2000);
+      }, this.defaultOptions.autoFlipDelay);
     }
   },
 
   methods: {
     goTo(page) {
-      // this.triggerClicking = true;
       $(`#${this.uid}`).turn("page", page);
     },
 
     first() {},
 
     last() {
-      if (this.auto) {
+      if (this.defaultOptions.autoFlip) {
         this.currentPage = 1;
       }
     }
@@ -1794,8 +1824,8 @@ var __vue_staticRenderFns__ = [];
 
 const __vue_inject_styles__ = function (inject) {
   if (!inject) return;
-  inject("data-v-0b3ee4cd_0", {
-    source: ".flip-book[data-v-0b3ee4cd]{width:800px;height:600px;position:relative;margin:10px}",
+  inject("data-v-80c8ab18_0", {
+    source: ".flip-book[data-v-80c8ab18]{width:800px;height:600px;position:relative;margin:10px}",
     map: undefined,
     media: undefined
   });
@@ -1803,7 +1833,7 @@ const __vue_inject_styles__ = function (inject) {
 /* scoped */
 
 
-const __vue_scope_id__ = "data-v-0b3ee4cd";
+const __vue_scope_id__ = "data-v-80c8ab18";
 /* module identifier */
 
 const __vue_module_identifier__ = undefined;
@@ -1858,3 +1888,4 @@ if (GlobalVue) {
 
 export default plugin;
 export { __vue_component__ as Turn };
+//# sourceMappingURL=vue-turnjs.esm.js.map

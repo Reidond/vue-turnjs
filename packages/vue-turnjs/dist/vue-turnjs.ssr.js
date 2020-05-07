@@ -1740,10 +1740,6 @@ function _nonIterableRest() {
     options: {
       type: Object,
       default: function _default() {}
-    },
-    auto: {
-      type: Boolean,
-      default: false
     }
   },
   watch: {
@@ -1770,6 +1766,8 @@ function _nonIterableRest() {
         height: 600,
         display: "double",
         duration: 1800,
+        autoFlip: false,
+        autoFlipDelay: 2000,
         page: 1,
         when: {
           turning: function turning(event, page, pageObj) {
@@ -1792,20 +1790,19 @@ function _nonIterableRest() {
 
     $("#".concat(this.uid)).turn(this.defaultOptions);
 
-    if (this.auto) {
+    if (this.defaultOptions.autoFlip) {
       this.setIntervalId = setInterval(function () {
         _this2.currentPage++;
-      }, 2000);
+      }, this.defaultOptions.autoFlipDelay);
     }
   },
   methods: {
     goTo: function goTo(page) {
-      // this.triggerClicking = true;
       $("#".concat(this.uid)).turn("page", page);
     },
     first: function first() {},
     last: function last() {
-      if (this.auto) {
+      if (this.defaultOptions.autoFlip) {
         this.currentPage = 1;
       }
     }
@@ -1949,8 +1946,8 @@ var __vue_staticRenderFns__ = [];
 
 var __vue_inject_styles__ = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-0b3ee4cd_0", {
-    source: ".flip-book[data-v-0b3ee4cd]{width:800px;height:600px;position:relative;margin:10px}",
+  inject("data-v-80c8ab18_0", {
+    source: ".flip-book[data-v-80c8ab18]{width:800px;height:600px;position:relative;margin:10px}",
     map: undefined,
     media: undefined
   });
@@ -1958,10 +1955,10 @@ var __vue_inject_styles__ = function __vue_inject_styles__(inject) {
 /* scoped */
 
 
-var __vue_scope_id__ = "data-v-0b3ee4cd";
+var __vue_scope_id__ = "data-v-80c8ab18";
 /* module identifier */
 
-var __vue_module_identifier__ = "data-v-0b3ee4cd";
+var __vue_module_identifier__ = "data-v-80c8ab18";
 /* functional template */
 
 var __vue_is_functional_template__ = false;

@@ -20,10 +20,6 @@ export default {
     options: {
       type: Object,
       default: () => {}
-    },
-    auto: {
-      type: Boolean,
-      default: false
     }
   },
   watch: {
@@ -48,6 +44,8 @@ export default {
         height: 600,
         display: "double",
         duration: 1800,
+        autoFlip: false,
+        autoFlipDelay: 2000,
         page: 1,
         when: {
           turning: (event, page, pageObj) => {
@@ -68,20 +66,19 @@ export default {
   },
   mounted() {
     $(`#${this.uid}`).turn(this.defaultOptions);
-    if (this.auto) {
+    if (this.defaultOptions.autoFlip) {
       this.setIntervalId = setInterval(() => {
         this.currentPage++;
-      }, 2000);
+      }, this.defaultOptions.autoFlipDelay);
     }
   },
   methods: {
     goTo(page) {
-      // this.triggerClicking = true;
       $(`#${this.uid}`).turn("page", page);
     },
     first() {},
     last() {
-      if (this.auto) {
+      if (this.defaultOptions.autoFlip) {
         this.currentPage = 1;
       }
     }
