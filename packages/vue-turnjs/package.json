@@ -2,6 +2,9 @@
   "name": "vue-turnjs",
   "version": "1.0.1",
   "description": "",
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "dist/vue-turnjs.ssr.js",
   "browser": "dist/vue-turnjs.esm.js",
   "module": "dist/vue-turnjs.esm.js",

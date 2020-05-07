@@ -1,7 +1,10 @@
 {
-  "name": "vue-turnjs-example",
+  "name": "example",
   "version": "1.0.0",
   "private": true,
+  "publishConfig": {
+    "access": "restricted"
+  },
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
