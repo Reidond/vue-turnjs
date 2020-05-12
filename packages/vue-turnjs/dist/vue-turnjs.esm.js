@@ -1547,7 +1547,7 @@ let urlAlphabet =
 
 // We reuse buffers with the same size to avoid memory fragmentations
 // for better performance.
-let buffers = { };
+let buffers = {};
 let random = bytes => {
   let buffer = buffers[bytes];
   if (!buffer) {
@@ -1582,39 +1582,32 @@ var script = {
   data() {
     return {
       nanoid: nanoid(),
-      currentPage: 1,
-      triggerClicking: false,
-      setIntervalId: null
+      componentKey: 0
     };
   },
 
   props: {
-    id: {
-      type: String
-    },
     options: {
       type: Object,
       default: () => {}
     }
   },
   watch: {
-    currentPage: {
+    defaultOptions: {
       handler(val) {
-        this.$emit("changePage", val);
-        this.goTo(val);
+        this.forceRerender(val);
       },
 
-      immediately: true
-    },
-
-    defaultOptions(val) {
-      $(`#${this.uid}`).turn(val);
+      deep: true
     }
-
   },
   computed: {
     uid() {
-      return !this.id ? this.nanoid : `${this.id}-${this.nanoid}`;
+      return `jopa-${this.nanoid}`;
+    },
+
+    selector() {
+      return `div[data-uid=${this.uid}]`;
     },
 
     defaultOptions() {
@@ -1623,8 +1616,6 @@ var script = {
         height: 600,
         display: "double",
         duration: 1800,
-        autoFlip: false,
-        autoFlipDelay: 2000,
         page: 1,
         when: {
           turning: (event, page, pageObj) => {
@@ -1646,26 +1637,22 @@ var script = {
   },
 
   mounted() {
-    $(`#${this.uid}`).turn(this.defaultOptions);
-
-    if (this.defaultOptions.autoFlip) {
-      this.setIntervalId = setInterval(() => {
-        this.currentPage++;
-      }, this.defaultOptions.autoFlipDelay);
-    }
+    $(this.selector).turn(this.defaultOptions);
   },
 
   methods: {
     goTo(page) {
-      $(`#${this.uid}`).turn("page", page);
+      $(this.selector).turn("page", page);
     },
 
     first() {},
 
-    last() {
-      if (this.defaultOptions.autoFlip) {
-        this.currentPage = 1;
-      }
+    last() {},
+
+    forceRerender(val) {
+      this.nanoid = nanoid();
+      this.componentKey += 1;
+      this.$nextTick(() => $(this.selector).turn(val));
     }
 
   }
@@ -1759,9 +1746,10 @@ var __vue_render__ = function () {
   var _c = _vm._self._c || _h;
 
   return _c('div', {
+    key: _vm.componentKey,
     staticClass: "flip-book",
     attrs: {
-      "id": this.uid
+      "data-uid": this.uid
     }
   }, [_vm._t("default")], 2);
 };
@@ -1772,7 +1760,7 @@ var __vue_staticRenderFns__ = [];
 const __vue_inject_styles__ = undefined;
 /* scoped */
 
-const __vue_scope_id__ = "data-v-80c8ab18";
+const __vue_scope_id__ = "data-v-04d10bb9";
 /* module identifier */
 
 const __vue_module_identifier__ = undefined;
@@ -1785,7 +1773,7 @@ const __vue_is_functional_template__ = false;
 
 /* style inject shadow dom */
 
-const __vue_component__ = normalizeComponent({
+const __vue_component__ = /*#__PURE__*/normalizeComponent({
   render: __vue_render__,
   staticRenderFns: __vue_staticRenderFns__
 }, __vue_inject_styles__, __vue_script__, __vue_scope_id__, __vue_is_functional_template__, __vue_module_identifier__, false, undefined, undefined, undefined);
@@ -3894,7 +3882,7 @@ const __vue_is_functional_template__$1 = false;
 
 /* style inject shadow dom */
 
-const __vue_component__$1 = normalizeComponent({
+const __vue_component__$1 = /*#__PURE__*/normalizeComponent({
   render: __vue_render__$1,
   staticRenderFns: __vue_staticRenderFns__$1
 }, __vue_inject_styles__$1, __vue_script__$1, __vue_scope_id__$1, __vue_is_functional_template__$1, __vue_module_identifier__$1, false, undefined, undefined, undefined);

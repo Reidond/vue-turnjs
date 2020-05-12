@@ -1728,35 +1728,29 @@ function _nonIterableRest() {
   data: function data() {
     return {
       nanoid: nanoid.nanoid(),
-      currentPage: 1,
-      triggerClicking: false,
-      setIntervalId: null
+      componentKey: 0
     };
   },
   props: {
-    id: {
-      type: String
-    },
     options: {
       type: Object,
       default: function _default() {}
     }
   },
   watch: {
-    currentPage: {
+    defaultOptions: {
       handler: function handler(val) {
-        this.$emit("changePage", val);
-        this.goTo(val);
+        this.forceRerender(val);
       },
-      immediately: true
-    },
-    defaultOptions: function defaultOptions(val) {
-      $("#".concat(this.uid)).turn(val);
+      deep: true
     }
   },
   computed: {
     uid: function uid() {
-      return !this.id ? this.nanoid : "".concat(this.id, "-").concat(this.nanoid);
+      return "jopa-".concat(this.nanoid);
+    },
+    selector: function selector() {
+      return "div[data-uid=".concat(this.uid, "]");
     },
     defaultOptions: function defaultOptions() {
       var _this = this;
@@ -1766,8 +1760,6 @@ function _nonIterableRest() {
         height: 600,
         display: "double",
         duration: 1800,
-        autoFlip: false,
-        autoFlipDelay: 2000,
         page: 1,
         when: {
           turning: function turning(event, page, pageObj) {
@@ -1786,25 +1778,22 @@ function _nonIterableRest() {
     }
   },
   mounted: function mounted() {
-    var _this2 = this;
-
-    $("#".concat(this.uid)).turn(this.defaultOptions);
-
-    if (this.defaultOptions.autoFlip) {
-      this.setIntervalId = setInterval(function () {
-        _this2.currentPage++;
-      }, this.defaultOptions.autoFlipDelay);
-    }
+    $(this.selector).turn(this.defaultOptions);
   },
   methods: {
     goTo: function goTo(page) {
-      $("#".concat(this.uid)).turn("page", page);
+      $(this.selector).turn("page", page);
     },
     first: function first() {},
-    last: function last() {
-      if (this.defaultOptions.autoFlip) {
-        this.currentPage = 1;
-      }
+    last: function last() {},
+    forceRerender: function forceRerender(val) {
+      var _this2 = this;
+
+      this.nanoid = nanoid.nanoid();
+      this.componentKey += 1;
+      this.$nextTick(function () {
+        return $(_this2.selector).turn(val);
+      });
     }
   }
 };function normalizeComponent(template, style, script, scopeId, isFunctionalTemplate, moduleIdentifier /* server only */, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
@@ -1899,12 +1888,22 @@ function createInjectorSSR(context) {
     return (id, style) => addStyle(id, style, context);
 }
 function addStyle(id, css, context) {
-    const group =  css.media || 'default' ;
+    const group = process.env.NODE_ENV === 'production' ? css.media || 'default' : id;
     const style = context._styles[group] || (context._styles[group] = { ids: [], css: '' });
     if (!style.ids.includes(id)) {
         style.media = css.media;
         style.ids.push(id);
         let code = css.source;
+        if (process.env.NODE_ENV !== 'production' && css.map) {
+            // https://developer.chrome.com/devtools/docs/javascript-debugging
+            // this makes source maps inside style tags work properly in Chrome
+            code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+            // http://stackoverflow.com/a/26603875
+            code +=
+                '\n/*# sourceMappingURL=data:application/json;base64,' +
+                    Buffer.from(unescape(encodeURIComponent(JSON.stringify(css.map)))).toString('base64') +
+                    ' */';
+        }
         style.css += code + '\n';
     }
 }
@@ -1936,9 +1935,10 @@ var __vue_render__ = function __vue_render__() {
   var _c = _vm._self._c || _h;
 
   return _c('div', {
+    key: _vm.componentKey,
     staticClass: "flip-book",
     attrs: {
-      "id": this.uid
+      "data-uid": this.uid
     }
   }, [_vm._t("default")], 2);
 };
@@ -1948,8 +1948,8 @@ var __vue_staticRenderFns__ = [];
 
 var __vue_inject_styles__ = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-80c8ab18_0", {
-    source: ".flip-book[data-v-80c8ab18]{width:800px;height:600px;position:relative;margin:10px}",
+  inject("data-v-04d10bb9_0", {
+    source: ".flip-book[data-v-04d10bb9]{width:800px;height:600px;position:relative;margin:10px}",
     map: undefined,
     media: undefined
   });
@@ -1957,16 +1957,16 @@ var __vue_inject_styles__ = function __vue_inject_styles__(inject) {
 /* scoped */
 
 
-var __vue_scope_id__ = "data-v-80c8ab18";
+var __vue_scope_id__ = "data-v-04d10bb9";
 /* module identifier */
 
-var __vue_module_identifier__ = "data-v-80c8ab18";
+var __vue_module_identifier__ = "data-v-04d10bb9";
 /* functional template */
 
 var __vue_is_functional_template__ = false;
 /* style inject shadow dom */
 
-var __vue_component__ = normalizeComponent({
+var __vue_component__ = /*#__PURE__*/normalizeComponent({
   render: __vue_render__,
   staticRenderFns: __vue_staticRenderFns__
 }, __vue_inject_styles__, __vue_script__, __vue_scope_id__, __vue_is_functional_template__, __vue_module_identifier__, false, undefined, createInjectorSSR, undefined);(function (window, document, undefined$1) {
@@ -4023,7 +4023,7 @@ var __vue_staticRenderFns__$1 = [];
 
 var __vue_inject_styles__$1 = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-12d1bbca_0", {
+  inject("data-v-578e9603_0", {
     source: ".bb-bookblock{width:400px;height:300px;margin:0 auto;position:relative;z-index:100;-webkit-perspective:1300px;perspective:1300px;-webkit-backface-visibility:hidden;backface-visibility:hidden}.bb-page{position:absolute;-webkit-transform-style:preserve-3d;transform-style:preserve-3d;-webkit-transition-property:-webkit-transform;transition-property:transform}.bb-vertical .bb-page{width:50%;height:100%;left:50%;-webkit-transform-origin:left center;transform-origin:left center}.bb-horizontal .bb-page{width:100%;height:50%;top:50%;-webkit-transform-origin:center top;transform-origin:center top}.bb-content,.bb-inner,.bb-outer,.bb-page>div{position:absolute;height:100%;width:100%;top:0;left:0;-webkit-backface-visibility:hidden;backface-visibility:hidden}.bb-vertical .bb-content{width:200%}.bb-horizontal .bb-content{height:200%}.bb-page>div{width:100%;-webkit-transform-style:preserve-3d;transform-style:preserve-3d}.bb-vertical .bb-back{-webkit-transform:rotateY(-180deg);transform:rotateY(-180deg)}.bb-horizontal .bb-back{-webkit-transform:rotateX(-180deg);transform:rotateX(-180deg)}.bb-outer{width:100%;overflow:hidden;z-index:999}.bb-flipoverlay,.bb-overlay{background-color:rgba(0,0,0,.7);position:absolute;top:0;left:0;width:100%;height:100%;opacity:0}.bb-flipoverlay{background-color:rgba(0,0,0,.2)}.bb-bookblock.bb-vertical>div.bb-page:first-child,.bb-bookblock.bb-vertical>div.bb-page:first-child .bb-back{-webkit-transform:rotateY(180deg);transform:rotateY(180deg)}.bb-bookblock.bb-horizontal>div.bb-page:first-child,.bb-bookblock.bb-horizontal>div.bb-page:first-child .bb-back{-webkit-transform:rotateX(180deg);transform:rotateX(180deg)}.bb-content{background:#fff}.bb-vertical .bb-front .bb-content{left:-100%}.bb-horizontal .bb-front .bb-content{top:-100%}.bb-vertical .bb-flip-initial,.bb-vertical .bb-flip-next{-webkit-transform:rotateY(-180deg);transform:rotateY(-180deg)}.bb-vertical .bb-flip-prev{-webkit-transform:rotateY(0);transform:rotateY(0)}.bb-horizontal .bb-flip-initial,.bb-horizontal .bb-flip-next{-webkit-transform:rotateX(180deg);transform:rotateX(180deg)}.bb-horizontal .bb-flip-prev{-webkit-transform:rotateX(0);transform:rotateX(0)}.bb-vertical .bb-flip-next-end{-webkit-transform:rotateY(-15deg);transform:rotateY(-15deg)}.bb-vertical .bb-flip-prev-end{-webkit-transform:rotateY(-165deg);transform:rotateY(-165deg)}.bb-horizontal .bb-flip-next-end{-webkit-transform:rotateX(15deg);transform:rotateX(15deg)}.bb-horizontal .bb-flip-prev-end{-webkit-transform:rotateX(165deg);transform:rotateX(165deg)}.bb-item{width:100%;height:100%;position:absolute;top:0;left:0;display:none;background:#fff}.no-js .bb-bookblock,.no-js ul.bb-custom-grid li{width:auto;height:auto}.no-js .bb-item{display:block;position:relative}",
     map: undefined,
     media: undefined
@@ -4035,13 +4035,13 @@ var __vue_inject_styles__$1 = function __vue_inject_styles__(inject) {
 var __vue_scope_id__$1 = undefined;
 /* module identifier */
 
-var __vue_module_identifier__$1 = "data-v-12d1bbca";
+var __vue_module_identifier__$1 = "data-v-578e9603";
 /* functional template */
 
 var __vue_is_functional_template__$1 = false;
 /* style inject shadow dom */
 
-var __vue_component__$1 = normalizeComponent({
+var __vue_component__$1 = /*#__PURE__*/normalizeComponent({
   render: __vue_render__$1,
   staticRenderFns: __vue_staticRenderFns__$1
 }, __vue_inject_styles__$1, __vue_script__$1, __vue_scope_id__$1, __vue_is_functional_template__$1, __vue_module_identifier__$1, false, undefined, createInjectorSSR, undefined);/* eslint-disable import/prefer-default-export */var components=/*#__PURE__*/Object.freeze({__proto__:null,Turn: __vue_component__,Bookblock: __vue_component__$1});var install = function installVueTurnjs(Vue) {

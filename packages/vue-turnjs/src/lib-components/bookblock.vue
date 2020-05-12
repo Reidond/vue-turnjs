@@ -6,9 +6,9 @@
 
 <script>
 import $ from "jquery";
-import "../lib/modernizr-custom.js";
-import "../lib/jquerypp.custom.js";
-import "../lib/jquery.bookblock.min.js";
+import "../../lib/modernizr-custom.js";
+import "../../lib/jquerypp.custom.js";
+import "../../lib/jquery.bookblock.min.js";
 import { nanoid } from "nanoid";
 
 export default {

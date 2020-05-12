@@ -1,6 +1,6 @@
 <script>
 import $ from "jquery";
-import "../lib/turn.min.js";
+import "../../lib/turn.min.js";
 import { nanoid } from "nanoid";
 
 export default {
@@ -8,35 +8,29 @@ export default {
   data() {
     return {
       nanoid: nanoid(),
-      currentPage: 1,
-      triggerClicking: false,
-      setIntervalId: null
+      componentKey: 0
     };
   },
   props: {
-    id: {
-      type: String
-    },
     options: {
       type: Object,
       default: () => {}
     }
   },
   watch: {
-    currentPage: {
+    defaultOptions: {
       handler(val) {
-        this.$emit("changePage", val);
-        this.goTo(val);
+        this.forceRerender(val);
       },
-      immediately: true
-    },
-    defaultOptions(val) {
-      $(`#${this.uid}`).turn(val);
+      deep: true
     }
   },
   computed: {
     uid() {
-      return !this.id ? this.nanoid : `${this.id}-${this.nanoid}`;
+      return `jopa-${this.nanoid}`;
+    },
+    selector() {
+      return `div[data-uid=${this.uid}]`;
     },
     defaultOptions() {
       return {
@@ -44,8 +38,6 @@ export default {
         height: 600,
         display: "double",
         duration: 1800,
-        autoFlip: false,
-        autoFlipDelay: 2000,
         page: 1,
         when: {
           turning: (event, page, pageObj) => {
@@ -65,29 +57,25 @@ export default {
     }
   },
   mounted() {
-    $(`#${this.uid}`).turn(this.defaultOptions);
-    if (this.defaultOptions.autoFlip) {
-      this.setIntervalId = setInterval(() => {
-        this.currentPage++;
-      }, this.defaultOptions.autoFlipDelay);
-    }
+    $(this.selector).turn(this.defaultOptions);
   },
   methods: {
     goTo(page) {
-      $(`#${this.uid}`).turn("page", page);
+      $(this.selector).turn("page", page);
     },
     first() {},
-    last() {
-      if (this.defaultOptions.autoFlip) {
-        this.currentPage = 1;
-      }
+    last() {},
+    forceRerender(val) {
+      this.nanoid = nanoid();
+      this.componentKey += 1;
+      this.$nextTick(() => $(this.selector).turn(val));
     }
   }
 };
 </script>
 
 <template>
-  <div class="flip-book" :id="this.uid">
+  <div class="flip-book" :key="componentKey" :data-uid="this.uid">
     <slot> </slot>
   </div>
 </template>

@@ -17,7 +17,7 @@ const esbrowserslist = fs
   .readFileSync("./.browserslistrc")
   .toString()
   .split("\n")
-  .filter((entry) => entry && entry.substring(0, 2) !== "ie");
+  .filter(entry => entry && entry.substring(0, 2) !== "ie");
 
 const argv = minimist(process.argv.slice(2));
 
@@ -27,33 +27,34 @@ const baseConfig = {
   input: "src/index.js",
   plugins: {
     preVue: [
-      replace({
-        "process.env.NODE_ENV": JSON.stringify("production"),
-      }),
       alias({
         resolve: [".js", ".jsx", ".ts", ".tsx", ".vue"],
         entries: {
-          "@": path.resolve(projectRoot, "src"),
-        },
+          "@": path.resolve(projectRoot, "src")
+        }
       }),
       inject({
         $: "jquery",
         jquery: "jquery",
         jQuery: "jquery",
-        "window.jQuery": "jquery",
-      }),
+        "window.jQuery": "jquery"
+      })
     ],
+    replace: {
+      "process.env.NODE_ENV": JSON.stringify("production"),
+      "process.env.ES_BUILD": JSON.stringify("false")
+    },
     vue: {
       css: false,
       template: {
-        isProduction: true,
-      },
+        isProduction: true
+      }
     },
     babel: {
-      exclude: "node_modules/**",
-      extensions: [".js", ".jsx", ".ts", ".tsx", ".vue"],
-    },
-  },
+      exclude: ["node_modules/**"],
+      extensions: [".js", ".jsx", ".ts", ".tsx", ".vue"]
+    }
+  }
 };
 
 // ESM/UMD/IIFE shared settings: externals
@@ -62,7 +63,7 @@ const external = [
   // list external dependencies, exactly the way it is written in the import statement.
   // eg. 'jquery'
   "vue",
-  "jquery",
+  "jquery"
 ];
 
 // UMD/IIFE shared settings: output.globals
@@ -71,7 +72,7 @@ const globals = {
   // Provide global variable names to replace your external imports
   // eg. jquery: '$'
   vue: "Vue",
-  jquery: "$",
+  jquery: "$"
 };
 
 // Customize configs for individual targets
@@ -83,9 +84,14 @@ if (!argv.format || argv.format === "es") {
     output: {
       file: "dist/vue-turnjs.esm.js",
       format: "esm",
-      sourcemap: true,
+      exports: "named",
+      sourcemap: true
     },
     plugins: [
+      replace({
+        ...baseConfig.plugins.replace,
+        "process.env.ES_BUILD": JSON.stringify("true")
+      }),
       ...baseConfig.plugins.preVue,
       resolve(),
       css(),
@@ -96,13 +102,13 @@ if (!argv.format || argv.format === "es") {
           [
             "@babel/preset-env",
             {
-              targets: esbrowserslist,
-            },
-          ],
-        ],
+              targets: esbrowserslist
+            }
+          ]
+        ]
       }),
-      commonjs(),
-    ],
+      commonjs()
+    ]
   };
   buildFormats.push(esConfig);
 }
@@ -117,7 +123,7 @@ if (!argv.format || argv.format === "cjs") {
       format: "cjs",
       name: "VueTurnjs",
       exports: "named",
-      globals,
+      globals
     },
     plugins: [
       ...baseConfig.plugins.preVue,
@@ -126,12 +132,12 @@ if (!argv.format || argv.format === "cjs") {
         ...baseConfig.plugins.vue,
         template: {
           ...baseConfig.plugins.vue.template,
-          optimizeSSR: true,
-        },
+          optimizeSSR: true
+        }
       }),
       babel(baseConfig.plugins.babel),
-      commonjs(),
-    ],
+      commonjs()
+    ]
   };
   buildFormats.push(umdConfig);
 }
@@ -146,7 +152,7 @@ if (!argv.format || argv.format === "iife") {
       format: "iife",
       name: "VueTurnjs",
       exports: "named",
-      globals,
+      globals
     },
     plugins: [
       ...baseConfig.plugins.preVue,
@@ -156,10 +162,10 @@ if (!argv.format || argv.format === "iife") {
       commonjs(),
       terser({
         output: {
-          ecma: 5,
-        },
-      }),
-    ],
+          ecma: 5
+        }
+      })
+    ]
   };
   buildFormats.push(unpkgConfig);
 }
