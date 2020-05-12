@@ -116,6 +116,12 @@ export default {
     last() {
       $(this.selector).bookblock("last");
     },
+    update() {
+      $(this.selector).bookblock("update");
+    },
+    destroy() {
+      $(this.selector).bookblock("destroy");
+    },
     forceRerender(val) {
       this.nanoid = nanoid();
       this.componentKey += 1;
