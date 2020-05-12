@@ -4061,7 +4061,182 @@ var __vue_is_functional_template__$1 = false;
 var __vue_component__$1 = /*#__PURE__*/normalizeComponent({
   render: __vue_render__$1,
   staticRenderFns: __vue_staticRenderFns__$1
-}, __vue_inject_styles__$1, __vue_script__$1, __vue_scope_id__$1, __vue_is_functional_template__$1, __vue_module_identifier__$1, false, undefined, createInjectorSSR, undefined);/* eslint-disable import/prefer-default-export */var components=/*#__PURE__*/Object.freeze({__proto__:null,Turn: __vue_component__,Bookblock: __vue_component__$1});var install = function installVueTurnjs(Vue) {
+}, __vue_inject_styles__$1, __vue_script__$1, __vue_scope_id__$1, __vue_is_functional_template__$1, __vue_module_identifier__$1, false, undefined, createInjectorSSR, undefined);var script$2 = {
+  name: "Bookblock2",
+  // vue component name
+  data: function data() {
+    return {
+      nanoid: nanoid.nanoid(),
+      componentKey: 0
+    };
+  },
+  props: {
+    options: {
+      type: Object,
+      default: function _default() {}
+    },
+    pages: {
+      type: Array,
+      default: function _default() {
+        return [];
+      }
+    }
+  },
+  watch: {
+    defaultOptions: {
+      handler: function handler(val) {
+        this.forceRerender(val);
+      },
+      deep: true,
+      immediate: true
+    },
+    pages: function pages() {
+      console.log("here");
+      this.forceRerender(this.defaultOptions);
+    }
+  },
+  computed: {
+    uid: function uid() {
+      return "jopa-".concat(this.nanoid);
+    },
+    selector: function selector() {
+      return "div[data-uid=".concat(this.uid, "]");
+    },
+    defaultOptions: function defaultOptions() {
+      return _objectSpread2({
+        // vertical or horizontal flip
+        orientation: "horizontal",
+        // ltr (left to right) or rtl (right to left)
+        direction: "ltr",
+        // speed for the flip transition in ms.
+        speed: 1000,
+        // easing for the flip transition.
+        easing: "ease-in-out",
+        // if set to true, both the flipping page and the sides will have an overlay to simulate shadows
+        shadows: true,
+        // opacity value for the "shadow" on both sides (when the flipping page is over it).
+        // value : 0.1 - 1
+        shadowSides: 0.2,
+        // opacity value for the "shadow" on the flipping page (while it is flipping).
+        // value : 0.1 - 1
+        shadowFlip: 0.1,
+        // if we should show the first item after reaching the end.
+        circular: false,
+        // if we want to specify a selector that triggers the next() function. example: '#bb-nav-next'.
+        nextEl: "",
+        // if we want to specify a selector that triggers the prev() function.
+        prevEl: "",
+        // If true it overwrites the circular option to true!
+        autoplay: false,
+        // time (ms) between page switch, if autoplay is true.
+        interval: 3000,
+        // callback after the flip transition.
+        // page is the current item's index.
+        // isLimit is true if the current page is the last one (or the first one).
+        onEndFlip: function onEndFlip(page, isLimit) {
+          return false;
+        },
+        // callback before the flip transition.
+        // page is the current item's index.
+        onBeforeFlip: function onBeforeFlip(page) {
+          return false;
+        }
+      }, this.options);
+    }
+  },
+  mounted: function mounted() {
+    this.forceRerender(this.defaultOptions);
+  },
+  methods: {
+    next: function next() {
+      $(this.selector).bookblock("next");
+    },
+    prev: function prev() {
+      $(this.selector).bookblock("prev");
+    },
+    jump: function jump(position) {
+      $(this.selector).bookblock("jump", position);
+    },
+    first: function first() {
+      $(this.selector).bookblock("first");
+    },
+    last: function last() {
+      $(this.selector).bookblock("last");
+    },
+    update: function update() {
+      console.log("updated");
+      $(this.selector).bookblock("update");
+    },
+    destroy: function destroy() {
+      $(this.selector).bookblock("destroy");
+    },
+    forceRerender: function forceRerender(val) {
+      var _this = this;
+
+      if (this.pages.length === 1) {
+        val.autoplay = false;
+      } else {
+        val.autoplay = true;
+      }
+
+      this.nanoid = nanoid.nanoid();
+      this.componentKey += 1;
+      this.$nextTick(function () {
+        return $(_this.selector).bookblock(val);
+      });
+    }
+  }
+};/* script */
+var __vue_script__$2 = script$2;
+/* template */
+
+var __vue_render__$2 = function __vue_render__() {
+  var _vm = this;
+
+  var _h = _vm.$createElement;
+
+  var _c = _vm._self._c || _h;
+
+  return _c('div', {
+    key: _vm.componentKey,
+    attrs: {
+      "data-uid": _vm.uid
+    }
+  }, _vm._l(_vm.pages, function (item, index) {
+    return _vm._ssrNode("<div class=\"bb-item\">", "</div>", [_vm._t("page", null, null, {
+      item: item,
+      index: index
+    })], 2);
+  }), 0);
+};
+
+var __vue_staticRenderFns__$2 = [];
+/* style */
+
+var __vue_inject_styles__$2 = function __vue_inject_styles__(inject) {
+  if (!inject) return;
+  inject("data-v-17aaf90f_0", {
+    source: ".bb-bookblock{width:400px;height:300px;margin:0 auto;position:relative;z-index:100;-webkit-perspective:1300px;perspective:1300px;-webkit-backface-visibility:hidden;backface-visibility:hidden}.bb-page{position:absolute;-webkit-transform-style:preserve-3d;transform-style:preserve-3d;-webkit-transition-property:-webkit-transform;transition-property:transform}.bb-vertical .bb-page{width:50%;height:100%;left:50%;-webkit-transform-origin:left center;transform-origin:left center}.bb-horizontal .bb-page{width:100%;height:50%;top:50%;-webkit-transform-origin:center top;transform-origin:center top}.bb-content,.bb-inner,.bb-outer,.bb-page>div{position:absolute;height:100%;width:100%;top:0;left:0;-webkit-backface-visibility:hidden;backface-visibility:hidden}.bb-vertical .bb-content{width:200%}.bb-horizontal .bb-content{height:200%}.bb-page>div{width:100%;-webkit-transform-style:preserve-3d;transform-style:preserve-3d}.bb-vertical .bb-back{-webkit-transform:rotateY(-180deg);transform:rotateY(-180deg)}.bb-horizontal .bb-back{-webkit-transform:rotateX(-180deg);transform:rotateX(-180deg)}.bb-outer{width:100%;overflow:hidden;z-index:999}.bb-flipoverlay,.bb-overlay{background-color:rgba(0,0,0,.7);position:absolute;top:0;left:0;width:100%;height:100%;opacity:0}.bb-flipoverlay{background-color:rgba(0,0,0,.2)}.bb-bookblock.bb-vertical>div.bb-page:first-child,.bb-bookblock.bb-vertical>div.bb-page:first-child .bb-back{-webkit-transform:rotateY(180deg);transform:rotateY(180deg)}.bb-bookblock.bb-horizontal>div.bb-page:first-child,.bb-bookblock.bb-horizontal>div.bb-page:first-child .bb-back{-webkit-transform:rotateX(180deg);transform:rotateX(180deg)}.bb-content{background:#fff}.bb-vertical .bb-front .bb-content{left:-100%}.bb-horizontal .bb-front .bb-content{top:-100%}.bb-vertical .bb-flip-initial,.bb-vertical .bb-flip-next{-webkit-transform:rotateY(-180deg);transform:rotateY(-180deg)}.bb-vertical .bb-flip-prev{-webkit-transform:rotateY(0);transform:rotateY(0)}.bb-horizontal .bb-flip-initial,.bb-horizontal .bb-flip-next{-webkit-transform:rotateX(180deg);transform:rotateX(180deg)}.bb-horizontal .bb-flip-prev{-webkit-transform:rotateX(0);transform:rotateX(0)}.bb-vertical .bb-flip-next-end{-webkit-transform:rotateY(-15deg);transform:rotateY(-15deg)}.bb-vertical .bb-flip-prev-end{-webkit-transform:rotateY(-165deg);transform:rotateY(-165deg)}.bb-horizontal .bb-flip-next-end{-webkit-transform:rotateX(15deg);transform:rotateX(15deg)}.bb-horizontal .bb-flip-prev-end{-webkit-transform:rotateX(165deg);transform:rotateX(165deg)}.bb-item{width:100%;height:100%;position:absolute;top:0;left:0;display:none;background:#fff}.no-js .bb-bookblock,.no-js ul.bb-custom-grid li{width:auto;height:auto}.no-js .bb-item{display:block;position:relative}",
+    map: undefined,
+    media: undefined
+  });
+};
+/* scoped */
+
+
+var __vue_scope_id__$2 = undefined;
+/* module identifier */
+
+var __vue_module_identifier__$2 = "data-v-17aaf90f";
+/* functional template */
+
+var __vue_is_functional_template__$2 = false;
+/* style inject shadow dom */
+
+var __vue_component__$2 = /*#__PURE__*/normalizeComponent({
+  render: __vue_render__$2,
+  staticRenderFns: __vue_staticRenderFns__$2
+}, __vue_inject_styles__$2, __vue_script__$2, __vue_scope_id__$2, __vue_is_functional_template__$2, __vue_module_identifier__$2, false, undefined, createInjectorSSR, undefined);/* eslint-disable import/prefer-default-export */var components=/*#__PURE__*/Object.freeze({__proto__:null,Turn: __vue_component__,Bookblock: __vue_component__$1,Bookblock2: __vue_component__$2});var install = function installVueTurnjs(Vue) {
   if (install.installed) return;
   install.installed = true;
   Object.entries(components).forEach(function (_ref) {
@@ -4092,4 +4267,4 @@ if (typeof window !== 'undefined') {
 if (GlobalVue) {
   GlobalVue.use(plugin);
 } // Default export is library as a whole, registered via Vue.use()
-exports.Bookblock=__vue_component__$1;exports.Turn=__vue_component__;exports.default=plugin;
+exports.Bookblock=__vue_component__$1;exports.Bookblock2=__vue_component__$2;exports.Turn=__vue_component__;exports.default=plugin;

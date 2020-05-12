@@ -3906,12 +3906,205 @@ const __vue_component__$1 = /*#__PURE__*/normalizeComponent({
   staticRenderFns: __vue_staticRenderFns__$1
 }, __vue_inject_styles__$1, __vue_script__$1, __vue_scope_id__$1, __vue_is_functional_template__$1, __vue_module_identifier__$1, false, undefined, undefined, undefined);
 
+//
+var script$2 = {
+  name: "Bookblock2",
+
+  // vue component name
+  data() {
+    return {
+      nanoid: nanoid(),
+      componentKey: 0
+    };
+  },
+
+  props: {
+    options: {
+      type: Object,
+      default: () => {}
+    },
+    pages: {
+      type: Array,
+      default: () => []
+    }
+  },
+  watch: {
+    defaultOptions: {
+      handler(val) {
+        this.forceRerender(val);
+      },
+
+      deep: true,
+      immediate: true
+    },
+
+    pages() {
+      console.log("here");
+      this.forceRerender(this.defaultOptions);
+    }
+
+  },
+  computed: {
+    uid() {
+      return `jopa-${this.nanoid}`;
+    },
+
+    selector() {
+      return `div[data-uid=${this.uid}]`;
+    },
+
+    defaultOptions() {
+      return {
+        // vertical or horizontal flip
+        orientation: "horizontal",
+        // ltr (left to right) or rtl (right to left)
+        direction: "ltr",
+        // speed for the flip transition in ms.
+        speed: 1000,
+        // easing for the flip transition.
+        easing: "ease-in-out",
+        // if set to true, both the flipping page and the sides will have an overlay to simulate shadows
+        shadows: true,
+        // opacity value for the "shadow" on both sides (when the flipping page is over it).
+        // value : 0.1 - 1
+        shadowSides: 0.2,
+        // opacity value for the "shadow" on the flipping page (while it is flipping).
+        // value : 0.1 - 1
+        shadowFlip: 0.1,
+        // if we should show the first item after reaching the end.
+        circular: false,
+        // if we want to specify a selector that triggers the next() function. example: '#bb-nav-next'.
+        nextEl: "",
+        // if we want to specify a selector that triggers the prev() function.
+        prevEl: "",
+        // If true it overwrites the circular option to true!
+        autoplay: false,
+        // time (ms) between page switch, if autoplay is true.
+        interval: 3000,
+        // callback after the flip transition.
+        // page is the current item's index.
+        // isLimit is true if the current page is the last one (or the first one).
+        onEndFlip: function (page, isLimit) {
+          return false;
+        },
+        // callback before the flip transition.
+        // page is the current item's index.
+        onBeforeFlip: function (page) {
+          return false;
+        },
+        ...this.options
+      };
+    }
+
+  },
+
+  mounted() {
+    this.forceRerender(this.defaultOptions);
+  },
+
+  methods: {
+    next() {
+      $(this.selector).bookblock("next");
+    },
+
+    prev() {
+      $(this.selector).bookblock("prev");
+    },
+
+    jump(position) {
+      $(this.selector).bookblock("jump", position);
+    },
+
+    first() {
+      $(this.selector).bookblock("first");
+    },
+
+    last() {
+      $(this.selector).bookblock("last");
+    },
+
+    update() {
+      console.log("updated");
+      $(this.selector).bookblock("update");
+    },
+
+    destroy() {
+      $(this.selector).bookblock("destroy");
+    },
+
+    forceRerender(val) {
+      if (this.pages.length === 1) {
+        val.autoplay = false;
+      } else {
+        val.autoplay = true;
+      }
+
+      this.nanoid = nanoid();
+      this.componentKey += 1;
+      this.$nextTick(() => $(this.selector).bookblock(val));
+    }
+
+  }
+};
+
+/* script */
+const __vue_script__$2 = script$2;
+/* template */
+
+var __vue_render__$2 = function () {
+  var _vm = this;
+
+  var _h = _vm.$createElement;
+
+  var _c = _vm._self._c || _h;
+
+  return _c('div', {
+    key: _vm.componentKey,
+    attrs: {
+      "data-uid": _vm.uid
+    }
+  }, _vm._l(_vm.pages, function (item, index) {
+    return _c('div', {
+      key: index + "-" + _vm.nanoid,
+      staticClass: "bb-item"
+    }, [_vm._t("page", null, null, {
+      item: item,
+      index: index
+    })], 2);
+  }), 0);
+};
+
+var __vue_staticRenderFns__$2 = [];
+/* style */
+
+const __vue_inject_styles__$2 = undefined;
+/* scoped */
+
+const __vue_scope_id__$2 = undefined;
+/* module identifier */
+
+const __vue_module_identifier__$2 = undefined;
+/* functional template */
+
+const __vue_is_functional_template__$2 = false;
+/* style inject */
+
+/* style inject SSR */
+
+/* style inject shadow dom */
+
+const __vue_component__$2 = /*#__PURE__*/normalizeComponent({
+  render: __vue_render__$2,
+  staticRenderFns: __vue_staticRenderFns__$2
+}, __vue_inject_styles__$2, __vue_script__$2, __vue_scope_id__$2, __vue_is_functional_template__$2, __vue_module_identifier__$2, false, undefined, undefined, undefined);
+
 /* eslint-disable import/prefer-default-export */
 
 var components = /*#__PURE__*/Object.freeze({
   __proto__: null,
   Turn: __vue_component__,
-  Bookblock: __vue_component__$1
+  Bookblock: __vue_component__$1,
+  Bookblock2: __vue_component__$2
 });
 
 // Import vue components
@@ -3945,4 +4138,4 @@ if (GlobalVue) {
 } // Default export is library as a whole, registered via Vue.use()
 
 export default plugin;
-export { __vue_component__$1 as Bookblock, __vue_component__ as Turn };
+export { __vue_component__$1 as Bookblock, __vue_component__$2 as Bookblock2, __vue_component__ as Turn };
