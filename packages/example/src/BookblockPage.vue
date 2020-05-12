@@ -90,18 +90,22 @@ export default {
   },
   data() {
     return {
-      pages: new Array(10).fill(0),
+      pages: [],
       bookblockOptions: {
         speed: 500,
-        autoplay: false
+        autoplay: true
       }
     };
   },
   mounted() {
     setTimeout(() => {
       this.pages.push(0);
-      this.bookblockOptions.autoplay = true;
     }, 10000);
+  },
+  watch: {
+    pages(val) {
+      this.bookblockOptions.autoplay = val.length > 0;
+    }
   },
   computed: {
     bookblockRef: function() {
