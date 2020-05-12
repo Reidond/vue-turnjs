@@ -82,7 +82,7 @@ if (!argv.format || argv.format === "es") {
     external,
     output: {
       file: "dist/vue-turnjs.esm.js",
-      format: "es",
+      format: "esm",
       sourcemap: true,
     },
     plugins: [

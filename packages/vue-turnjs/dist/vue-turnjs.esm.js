@@ -3747,34 +3747,40 @@ var script$1 = {
   // vue component name
   data() {
     return {
-      nanoid: nanoid()
+      nanoid: nanoid(),
+      componentKey: 0
     };
   },
 
   props: {
-    id: {
-      type: String
-    },
     options: {
       type: Object,
       default: () => {}
     }
   },
   watch: {
-    defaultOptions(val) {
-      $(`#${this.uid}`).bookblock(val);
-    }
+    defaultOptions: {
+      handler(val) {
+        this.forceRerender(val);
+      },
 
+      deep: true,
+      immediate: true
+    }
   },
   computed: {
     uid() {
-      return !this.id ? this.nanoid : `${this.id}-${this.nanoid}`;
+      return `jopa-${this.nanoid}`;
+    },
+
+    selector() {
+      return `div[data-uid=${this.uid}]`;
     },
 
     defaultOptions() {
       return {
         // vertical or horizontal flip
-        orientation: "vertical",
+        orientation: "horizontal",
         // ltr (left to right) or rtl (right to left)
         direction: "ltr",
         // speed for the flip transition in ms.
@@ -3817,28 +3823,34 @@ var script$1 = {
   },
 
   mounted() {
-    $(`#${this.uid}`).bookblock(this.defaultOptions);
+    $(this.selector).bookblock(this.defaultOptions);
   },
 
   methods: {
     next() {
-      $(`#${this.uid}`).bookblock("next");
+      $(this.selector).bookblock("next");
     },
 
     prev() {
-      $(`#${this.uid}`).bookblock("prev");
+      $(this.selector).bookblock("prev");
     },
 
     jump(position) {
-      $(`#${this.uid}`).bookblock("jump", position);
+      $(this.selector).bookblock("jump", position);
     },
 
     first() {
-      $(`#${this.uid}`).bookblock("first");
+      $(this.selector).bookblock("first");
     },
 
     last() {
-      $(`#${this.uid}`).bookblock("last");
+      $(this.selector).bookblock("last");
+    },
+
+    forceRerender(val) {
+      this.nanoid = nanoid();
+      this.componentKey += 1;
+      this.$nextTick(() => $(this.selector).bookblock(val));
     }
 
   }
@@ -3856,8 +3868,9 @@ var __vue_render__$1 = function () {
   var _c = _vm._self._c || _h;
 
   return _c('div', {
+    key: _vm.componentKey,
     attrs: {
-      "id": this.uid
+      "data-uid": _vm.uid
     }
   }, [_vm._t("default")], 2);
 };

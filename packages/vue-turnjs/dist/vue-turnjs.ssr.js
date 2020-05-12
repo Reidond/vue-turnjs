@@ -1922,7 +1922,9 @@ function renderStyles(styles) {
                 '</style>';
     }
     return css;
-}/* script */
+}
+//# sourceMappingURL=server.mjs.map
+/* script */
 var __vue_script__ = script;
 /* template */
 
@@ -3900,31 +3902,36 @@ var __vue_component__ = normalizeComponent({
   // vue component name
   data: function data() {
     return {
-      nanoid: nanoid.nanoid()
+      nanoid: nanoid.nanoid(),
+      componentKey: 0
     };
   },
   props: {
-    id: {
-      type: String
-    },
     options: {
       type: Object,
       default: function _default() {}
     }
   },
   watch: {
-    defaultOptions: function defaultOptions(val) {
-      $("#".concat(this.uid)).bookblock(val);
+    defaultOptions: {
+      handler: function handler(val) {
+        this.forceRerender(val);
+      },
+      deep: true,
+      immediate: true
     }
   },
   computed: {
     uid: function uid() {
-      return !this.id ? this.nanoid : "".concat(this.id, "-").concat(this.nanoid);
+      return "jopa-".concat(this.nanoid);
+    },
+    selector: function selector() {
+      return "div[data-uid=".concat(this.uid, "]");
     },
     defaultOptions: function defaultOptions() {
       return _objectSpread2({
         // vertical or horizontal flip
-        orientation: "vertical",
+        orientation: "horizontal",
         // ltr (left to right) or rtl (right to left)
         direction: "ltr",
         // speed for the flip transition in ms.
@@ -3964,23 +3971,32 @@ var __vue_component__ = normalizeComponent({
     }
   },
   mounted: function mounted() {
-    $("#".concat(this.uid)).bookblock(this.defaultOptions);
+    $(this.selector).bookblock(this.defaultOptions);
   },
   methods: {
     next: function next() {
-      $("#".concat(this.uid)).bookblock("next");
+      $(this.selector).bookblock("next");
     },
     prev: function prev() {
-      $("#".concat(this.uid)).bookblock("prev");
+      $(this.selector).bookblock("prev");
     },
     jump: function jump(position) {
-      $("#".concat(this.uid)).bookblock("jump", position);
+      $(this.selector).bookblock("jump", position);
     },
     first: function first() {
-      $("#".concat(this.uid)).bookblock("first");
+      $(this.selector).bookblock("first");
     },
     last: function last() {
-      $("#".concat(this.uid)).bookblock("last");
+      $(this.selector).bookblock("last");
+    },
+    forceRerender: function forceRerender(val) {
+      var _this = this;
+
+      this.nanoid = nanoid.nanoid();
+      this.componentKey += 1;
+      this.$nextTick(function () {
+        return $(_this.selector).bookblock(val);
+      });
     }
   }
 };/* script */
@@ -3995,8 +4011,9 @@ var __vue_render__$1 = function __vue_render__() {
   var _c = _vm._self._c || _h;
 
   return _c('div', {
+    key: _vm.componentKey,
     attrs: {
-      "id": this.uid
+      "data-uid": _vm.uid
     }
   }, [_vm._t("default")], 2);
 };
@@ -4006,7 +4023,7 @@ var __vue_staticRenderFns__$1 = [];
 
 var __vue_inject_styles__$1 = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-70622d1d_0", {
+  inject("data-v-12d1bbca_0", {
     source: ".bb-bookblock{width:400px;height:300px;margin:0 auto;position:relative;z-index:100;-webkit-perspective:1300px;perspective:1300px;-webkit-backface-visibility:hidden;backface-visibility:hidden}.bb-page{position:absolute;-webkit-transform-style:preserve-3d;transform-style:preserve-3d;-webkit-transition-property:-webkit-transform;transition-property:transform}.bb-vertical .bb-page{width:50%;height:100%;left:50%;-webkit-transform-origin:left center;transform-origin:left center}.bb-horizontal .bb-page{width:100%;height:50%;top:50%;-webkit-transform-origin:center top;transform-origin:center top}.bb-content,.bb-inner,.bb-outer,.bb-page>div{position:absolute;height:100%;width:100%;top:0;left:0;-webkit-backface-visibility:hidden;backface-visibility:hidden}.bb-vertical .bb-content{width:200%}.bb-horizontal .bb-content{height:200%}.bb-page>div{width:100%;-webkit-transform-style:preserve-3d;transform-style:preserve-3d}.bb-vertical .bb-back{-webkit-transform:rotateY(-180deg);transform:rotateY(-180deg)}.bb-horizontal .bb-back{-webkit-transform:rotateX(-180deg);transform:rotateX(-180deg)}.bb-outer{width:100%;overflow:hidden;z-index:999}.bb-flipoverlay,.bb-overlay{background-color:rgba(0,0,0,.7);position:absolute;top:0;left:0;width:100%;height:100%;opacity:0}.bb-flipoverlay{background-color:rgba(0,0,0,.2)}.bb-bookblock.bb-vertical>div.bb-page:first-child,.bb-bookblock.bb-vertical>div.bb-page:first-child .bb-back{-webkit-transform:rotateY(180deg);transform:rotateY(180deg)}.bb-bookblock.bb-horizontal>div.bb-page:first-child,.bb-bookblock.bb-horizontal>div.bb-page:first-child .bb-back{-webkit-transform:rotateX(180deg);transform:rotateX(180deg)}.bb-content{background:#fff}.bb-vertical .bb-front .bb-content{left:-100%}.bb-horizontal .bb-front .bb-content{top:-100%}.bb-vertical .bb-flip-initial,.bb-vertical .bb-flip-next{-webkit-transform:rotateY(-180deg);transform:rotateY(-180deg)}.bb-vertical .bb-flip-prev{-webkit-transform:rotateY(0);transform:rotateY(0)}.bb-horizontal .bb-flip-initial,.bb-horizontal .bb-flip-next{-webkit-transform:rotateX(180deg);transform:rotateX(180deg)}.bb-horizontal .bb-flip-prev{-webkit-transform:rotateX(0);transform:rotateX(0)}.bb-vertical .bb-flip-next-end{-webkit-transform:rotateY(-15deg);transform:rotateY(-15deg)}.bb-vertical .bb-flip-prev-end{-webkit-transform:rotateY(-165deg);transform:rotateY(-165deg)}.bb-horizontal .bb-flip-next-end{-webkit-transform:rotateX(15deg);transform:rotateX(15deg)}.bb-horizontal .bb-flip-prev-end{-webkit-transform:rotateX(165deg);transform:rotateX(165deg)}.bb-item{width:100%;height:100%;position:absolute;top:0;left:0;display:none;background:#fff}.no-js .bb-bookblock,.no-js ul.bb-custom-grid li{width:auto;height:auto}.no-js .bb-item{display:block;position:relative}",
     map: undefined,
     media: undefined
@@ -4018,7 +4035,7 @@ var __vue_inject_styles__$1 = function __vue_inject_styles__(inject) {
 var __vue_scope_id__$1 = undefined;
 /* module identifier */
 
-var __vue_module_identifier__$1 = "data-v-70622d1d";
+var __vue_module_identifier__$1 = "data-v-12d1bbca";
 /* functional template */
 
 var __vue_is_functional_template__$1 = false;

@@ -177,7 +177,8 @@ export default {
       turn: false,
       bookblock: true,
       bookblockOptions: {
-        speed: 500
+        speed: 500,
+        autoplay: false
       }
     };
   },
