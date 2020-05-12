@@ -1,6 +1,14 @@
 <template>
   <div :key="componentKey" :data-uid="uid">
-    <slot> </slot>
+    <slot></slot>
+    <!-- different version -->
+    <!-- <div
+      :key="`${index}-${nanoid}`"
+      v-for="(item, index) in pages"
+      class="bb-item"
+    >
+      <slot name="page" v-bind="{ item, index }"></slot>
+    </div> -->
   </div>
 </template>
 
@@ -24,6 +32,11 @@ export default {
       type: Object,
       default: () => {}
     }
+    // different version
+    // pages: {
+    //   type: Array,
+    //   default: () => []
+    // }
   },
   watch: {
     defaultOptions: {
@@ -33,6 +46,11 @@ export default {
       deep: true,
       immediate: true
     }
+    // different version
+    // pages() {
+    //   this.update();
+    //   // this.forceRerender(this.defaultOptions);
+    // }
   },
   computed: {
     uid() {
@@ -98,7 +116,7 @@ export default {
     }
   },
   mounted() {
-    $(this.selector).bookblock(this.defaultOptions);
+    this.forceRerender(this.defaultOptions);
   },
   methods: {
     next() {
@@ -117,6 +135,7 @@ export default {
       $(this.selector).bookblock("last");
     },
     update() {
+      console.log("updated");
       $(this.selector).bookblock("update");
     },
     destroy() {

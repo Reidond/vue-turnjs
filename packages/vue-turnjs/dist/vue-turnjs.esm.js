@@ -3744,7 +3744,12 @@ var script$1 = {
     options: {
       type: Object,
       default: () => {}
-    }
+    } // different version
+    // pages: {
+    //   type: Array,
+    //   default: () => []
+    // }
+
   },
   watch: {
     defaultOptions: {
@@ -3754,7 +3759,12 @@ var script$1 = {
 
       deep: true,
       immediate: true
-    }
+    } // different version
+    // pages() {
+    //   this.update();
+    //   // this.forceRerender(this.defaultOptions);
+    // }
+
   },
   computed: {
     uid() {
@@ -3811,7 +3821,7 @@ var script$1 = {
   },
 
   mounted() {
-    $(this.selector).bookblock(this.defaultOptions);
+    this.forceRerender(this.defaultOptions);
   },
 
   methods: {
@@ -3833,6 +3843,15 @@ var script$1 = {
 
     last() {
       $(this.selector).bookblock("last");
+    },
+
+    update() {
+      console.log("updated");
+      $(this.selector).bookblock("update");
+    },
+
+    destroy() {
+      $(this.selector).bookblock("destroy");
     },
 
     forceRerender(val) {
@@ -3927,4 +3946,3 @@ if (GlobalVue) {
 
 export default plugin;
 export { __vue_component__$1 as Bookblock, __vue_component__ as Turn };
-//# sourceMappingURL=vue-turnjs.esm.js.map

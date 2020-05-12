@@ -7,9 +7,9 @@
           <p>lorem ipsum</p>
         </div>
       </div>
-      <div class="bb-item">
+      <div class="bb-item" v-for="(page, index) in pages" :key="page + index">
         <div class="page">
-          <h1>Page 1</h1>
+          <h1>Page {{ page + index }}</h1>
           <p>
             Lorem ipsum dolor sit amet, utinam audiam forensibus vim no, mel
             solum graecis recusabo ei. Et viris placerat qui, ad quodsi eleifend
@@ -20,55 +20,7 @@
           </p>
         </div>
         <div class="page">
-          <h1>Page 2</h1>
-          <p>
-            Vis mollis consulatu et, has in facilisis posidonium. Minim choro ea
-            quo, iisque feugait consectetuer at mei. Ne ius omnium maiestatis,
-            et augue indoctum elaboraret cum. Ad his mutat munere, choro saperet
-            no quo. Duo ne adolescens consequuntur, etiam essent patrioque te
-            ius, legendos inimicus mea ex. Qui cu lorem comprehensam, cu
-            nominati sententiae definitionem eos.
-          </p>
-        </div>
-      </div>
-      <div class="bb-item">
-        <div class="page">
-          <h1>Page 3</h1>
-          <p>
-            Lorem ipsum dolor sit amet, utinam audiam forensibus vim no, mel
-            solum graecis recusabo ei. Et viris placerat qui, ad quodsi eleifend
-            constituam eam. Ex iusto partiendo gubergren per, quis assentior
-            dissentias cum ad, te eruditi utroque dissentiunt qui. Ad vix debet
-            mucius iriure. Cu soleat facilis vim, sit nullam delenit ne. Sea
-            simul aliquam in, has augue soleat at.
-          </p>
-        </div>
-        <div class="page">
-          <h1>Page 4</h1>
-          <p>
-            Vis mollis consulatu et, has in facilisis posidonium. Minim choro ea
-            quo, iisque feugait consectetuer at mei. Ne ius omnium maiestatis,
-            et augue indoctum elaboraret cum. Ad his mutat munere, choro saperet
-            no quo. Duo ne adolescens consequuntur, etiam essent patrioque te
-            ius, legendos inimicus mea ex. Qui cu lorem comprehensam, cu
-            nominati sententiae definitionem eos.
-          </p>
-        </div>
-      </div>
-      <div class="bb-item">
-        <div class="page">
-          <h1>Page 5</h1>
-          <p>
-            Lorem ipsum dolor sit amet, utinam audiam forensibus vim no, mel
-            solum graecis recusabo ei. Et viris placerat qui, ad quodsi eleifend
-            constituam eam. Ex iusto partiendo gubergren per, quis assentior
-            dissentias cum ad, te eruditi utroque dissentiunt qui. Ad vix debet
-            mucius iriure. Cu soleat facilis vim, sit nullam delenit ne. Sea
-            simul aliquam in, has augue soleat at.
-          </p>
-        </div>
-        <div class="page">
-          <h1>Page 6</h1>
+          <h1>Page {{ page + index }}</h1>
           <p>
             Vis mollis consulatu et, has in facilisis posidonium. Minim choro ea
             quo, iisque feugait consectetuer at mei. Ne ius omnium maiestatis,
@@ -80,6 +32,38 @@
         </div>
       </div>
     </Bookblock>
+    <!-- different version -->
+    <!-- <Bookblock
+      class="bb-bookblock"
+      ref="bookBlock"
+      :options="bookblockOptions"
+      :pages="pages"
+    >
+      <template v-slot:page="{ item, index }">
+        <div class="page">
+          <h1>Page {{ item + index }}</h1>
+          <p>
+            Lorem ipsum dolor sit amet, utinam audiam forensibus vim no, mel
+            solum graecis recusabo ei. Et viris placerat qui, ad quodsi eleifend
+            constituam eam. Ex iusto partiendo gubergren per, quis assentior
+            dissentias cum ad, te eruditi utroque dissentiunt qui. Ad vix debet
+            mucius iriure. Cu soleat facilis vim, sit nullam delenit ne. Sea
+            simul aliquam in, has augue soleat at.
+          </p>
+        </div>
+        <div class="page">
+          <h1>Page {{ item + index }}</h1>
+          <p>
+            Vis mollis consulatu et, has in facilisis posidonium. Minim choro ea
+            quo, iisque feugait consectetuer at mei. Ne ius omnium maiestatis,
+            et augue indoctum elaboraret cum. Ad his mutat munere, choro saperet
+            no quo. Duo ne adolescens consequuntur, etiam essent patrioque te
+            ius, legendos inimicus mea ex. Qui cu lorem comprehensam, cu
+            nominati sententiae definitionem eos.
+          </p>
+        </div>
+      </template>
+    </Bookblock> -->
     <nav>
       <a id="bb-nav-first" href="javascript:" @click="bookblockRef.first()"
         >First page</a
@@ -106,11 +90,18 @@ export default {
   },
   data() {
     return {
+      pages: new Array(10).fill(0),
       bookblockOptions: {
         speed: 500,
         autoplay: false
       }
     };
+  },
+  mounted() {
+    setTimeout(() => {
+      this.pages.push(0);
+      this.bookblockOptions.autoplay = true;
+    }, 10000);
   },
   computed: {
     bookblockRef: function() {
