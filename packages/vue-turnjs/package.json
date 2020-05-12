@@ -5,6 +5,7 @@
   "publishConfig": {
     "access": "public"
   },
+  "licence": "LGPL-3.0-only",
   "main": "dist/vue-turnjs.ssr.js",
   "browser": "dist/vue-turnjs.esm.js",
   "module": "dist/vue-turnjs.esm.js",
@@ -15,6 +16,7 @@
     "!src/serve-dev.*"
   ],
   "scripts": {
+    "serve": "cross-env NODE_ENV=development rollup --config rollup.config.js --watch",
     "build": "cross-env NODE_ENV=production rollup --config rollup.config.js",
     "build:ssr": "cross-env NODE_ENV=production rollup --config rollup.config.js --format cjs",
     "build:es": "cross-env NODE_ENV=production rollup --config rollup.config.js --format es",
@@ -52,5 +54,5 @@
   "engines": {
     "node": ">=8"
   },
-  "gitHead": "6c5c751553198c3eba0278369ea484cb58835d1e"
+  "gitHead": "9644eab6158bd770a3f9dfba567fd76f52511775"
 }
