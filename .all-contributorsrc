@@ -1,0 +1,24 @@
+{
+  "projectName": "vue-turnjs",
+  "projectOwner": "Reidond",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": true,
+  "commitConvention": "angular",
+  "contributors": [
+    {
+      "login": "Reidond",
+      "name": "Andrii Shafar",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/20406775?v=4",
+      "profile": "https://github.com/Reidond",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7
+}
