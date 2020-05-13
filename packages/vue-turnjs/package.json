@@ -1,6 +1,6 @@
 {
   "name": "vue-turnjs",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "A vue wrapper for turn.js and bookblock libraries.",
   "publishConfig": {
     "access": "public"
