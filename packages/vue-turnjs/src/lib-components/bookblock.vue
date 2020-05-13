@@ -16,7 +16,7 @@
 import $ from "jquery";
 import "../../lib/modernizr-custom.js";
 import "../../lib/jquerypp.custom.js";
-import "../../lib/jquery.bookblock.min.js";
+import "../../lib/jquery.bookblock.modified.js";
 import { nanoid } from "nanoid";
 
 export default {

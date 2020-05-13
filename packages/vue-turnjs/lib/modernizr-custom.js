@@ -20,11 +20,10 @@
  * a global `Modernizr` object, and as classes on the `<html>` element. This
  * information allows you to progressively enhance your pages with a granular level
  * of control over the experience.
-*/
+ */
 
-;(function(window, document, undefined){
+(function(window, document, undefined) {
   var tests = [];
-  
 
   /**
    *
@@ -36,15 +35,15 @@
 
   var ModernizrProto = {
     // The current version, dummy
-    _version: '3.6.0',
+    _version: "3.6.0",
 
     // Any settings that don't work as separate modules
     // can go in here as configuration.
     _config: {
-      'classPrefix': '',
-      'enableClasses': true,
-      'enableJSClass': true,
-      'usePrefixes': true
+      classPrefix: "",
+      enableClasses: true,
+      enableJSClass: true,
+      usePrefixes: true
     },
 
     // Queue of tests
@@ -65,15 +64,13 @@
     },
 
     addTest: function(name, fn, options) {
-      tests.push({name: name, fn: fn, options: options});
+      tests.push({ name: name, fn: fn, options: options });
     },
 
     addAsyncTest: function(fn) {
-      tests.push({name: null, fn: fn});
+      tests.push({ name: null, fn: fn });
     }
   };
-
-  
 
   // Fake some of Object.create so we can force non test results to be non "own" properties.
   var Modernizr = function() {};
@@ -83,10 +80,7 @@
   // Overwrite name so constructor name is nicer :D
   Modernizr = new Modernizr();
 
-  
-
   var classes = [];
-  
 
   /**
    * is returns a boolean if the typeof an obj is exactly type.
@@ -101,8 +95,6 @@
   function is(obj, type) {
     return typeof obj === type;
   }
-  ;
-
   /**
    * Run through all tests and detect their support in the current UA.
    *
@@ -132,17 +124,26 @@
         if (feature.name) {
           featureNames.push(feature.name.toLowerCase());
 
-          if (feature.options && feature.options.aliases && feature.options.aliases.length) {
+          if (
+            feature.options &&
+            feature.options.aliases &&
+            feature.options.aliases.length
+          ) {
             // Add all the aliases into the names list
-            for (aliasIdx = 0; aliasIdx < feature.options.aliases.length; aliasIdx++) {
-              featureNames.push(feature.options.aliases[aliasIdx].toLowerCase());
+            for (
+              aliasIdx = 0;
+              aliasIdx < feature.options.aliases.length;
+              aliasIdx++
+            ) {
+              featureNames.push(
+                feature.options.aliases[aliasIdx].toLowerCase()
+              );
             }
           }
         }
 
         // Run the test, or use the raw value if it's not a function
-        result = is(feature.fn, 'function') ? feature.fn() : feature.fn;
-
+        result = is(feature.fn, "function") ? feature.fn() : feature.fn;
 
         // Set each of the names on the Modernizr object
         for (nameIdx = 0; nameIdx < featureNames.length; nameIdx++) {
@@ -153,26 +154,29 @@
           //
           // Cap it to TWO to make the logic simple and because who needs that kind of subtesting
           // hashtag famous last words
-          featureNameSplit = featureName.split('.');
+          featureNameSplit = featureName.split(".");
 
           if (featureNameSplit.length === 1) {
             Modernizr[featureNameSplit[0]] = result;
           } else {
             // cast to a Boolean, if not one already
-            if (Modernizr[featureNameSplit[0]] && !(Modernizr[featureNameSplit[0]] instanceof Boolean)) {
-              Modernizr[featureNameSplit[0]] = new Boolean(Modernizr[featureNameSplit[0]]);
+            if (
+              Modernizr[featureNameSplit[0]] &&
+              !(Modernizr[featureNameSplit[0]] instanceof Boolean)
+            ) {
+              Modernizr[featureNameSplit[0]] = new Boolean(
+                Modernizr[featureNameSplit[0]]
+              );
             }
 
             Modernizr[featureNameSplit[0]][featureNameSplit[1]] = result;
           }
 
-          classes.push((result ? '' : 'no-') + featureNameSplit.join('-'));
+          classes.push((result ? "" : "no-") + featureNameSplit.join("-"));
         }
       }
     }
   }
-  ;
-
   /**
    * hasOwnProp is a shim for hasOwnProperty that is needed for Safari 2.0 support
    *
@@ -188,23 +192,27 @@
   var hasOwnProp;
 
   (function() {
-    var _hasOwnProperty = ({}).hasOwnProperty;
+    var _hasOwnProperty = {}.hasOwnProperty;
     /* istanbul ignore else */
     /* we have no way of testing IE 5.5 or safari 2,
      * so just assume the else gets hit */
-    if (!is(_hasOwnProperty, 'undefined') && !is(_hasOwnProperty.call, 'undefined')) {
+    if (
+      !is(_hasOwnProperty, "undefined") &&
+      !is(_hasOwnProperty.call, "undefined")
+    ) {
       hasOwnProp = function(object, property) {
         return _hasOwnProperty.call(object, property);
       };
-    }
-    else {
-      hasOwnProp = function(object, property) { /* yes, this can give false positives/negatives, but most of the time we don't care about those */
-        return ((property in object) && is(object.constructor.prototype[property], 'undefined'));
+    } else {
+      hasOwnProp = function(object, property) {
+        /* yes, this can give false positives/negatives, but most of the time we don't care about those */
+        return (
+          property in object &&
+          is(object.constructor.prototype[property], "undefined")
+        );
       };
     }
   })();
-
-  
 
   /**
    * cssToDOM takes a kebab-case string and converts it to camelCase
@@ -217,12 +225,13 @@
    */
 
   function cssToDOM(name) {
-    return name.replace(/([a-z])-([a-z])/g, function(str, m1, m2) {
-      return m1 + m2.toUpperCase();
-    }).replace(/^-/, '');
+    return name
+      .replace(/([a-z])-([a-z])/g, function(str, m1, m2) {
+        return m1 + m2.toUpperCase();
+      })
+      .replace(/^-/, "");
   }
-  ;
-/*!
+  /*!
 {
   "name": "CSS Supports",
   "property": "supports",
@@ -242,10 +251,9 @@
 }
 !*/
 
-  var newSyntax = 'CSS' in window && 'supports' in window.CSS;
-  var oldSyntax = 'supportsCSS' in window;
-  Modernizr.addTest('supports', newSyntax || oldSyntax);
-
+  var newSyntax = "CSS" in window && "supports" in window.CSS;
+  var oldSyntax = "supportsCSS" in window;
+  Modernizr.addTest("supports", newSyntax || oldSyntax);
 
   /**
    * docElement is a convenience wrapper to grab the root element of the document
@@ -255,7 +263,6 @@
    */
 
   var docElement = document.documentElement;
-  
 
   /**
    * A convenience helper to check if the document we are running in is an SVG document
@@ -264,8 +271,7 @@
    * @returns {boolean}
    */
 
-  var isSVG = docElement.nodeName.toLowerCase() === 'svg';
-  
+  var isSVG = docElement.nodeName.toLowerCase() === "svg";
 
   /**
    * setClasses takes an array of class names and adds them to the root element
@@ -279,7 +285,7 @@
   //  ['no-webp', 'borderradius', ...]
   function setClasses(classes) {
     var className = docElement.className;
-    var classPrefix = Modernizr._config.classPrefix || '';
+    var classPrefix = Modernizr._config.classPrefix || "";
 
     if (isSVG) {
       className = className.baseVal;
@@ -288,26 +294,22 @@
     // Change `no-js` to `js` (independently of the `enableClasses` option)
     // Handle classPrefix on this too
     if (Modernizr._config.enableJSClass) {
-      var reJS = new RegExp('(^|\\s)' + classPrefix + 'no-js(\\s|$)');
-      className = className.replace(reJS, '$1' + classPrefix + 'js$2');
+      var reJS = new RegExp("(^|\\s)" + classPrefix + "no-js(\\s|$)");
+      className = className.replace(reJS, "$1" + classPrefix + "js$2");
     }
 
     if (Modernizr._config.enableClasses) {
       // Add the new classes
-      className += ' ' + classPrefix + classes.join(' ' + classPrefix);
+      className += " " + classPrefix + classes.join(" " + classPrefix);
       if (isSVG) {
         docElement.className.baseVal = className;
       } else {
         docElement.className = className;
       }
     }
-
   }
 
-  ;
-
-
-   // _l tracks listeners for async tests, as well as tests that execute after the initial run
+  // _l tracks listeners for async tests, as well as tests that execute after the initial run
   ModernizrProto._l = {};
 
   /**
@@ -455,17 +457,15 @@
    */
 
   function addTest(feature, test) {
-
-    if (typeof feature == 'object') {
+    if (typeof feature == "object") {
       for (var key in feature) {
         if (hasOwnProp(feature, key)) {
-          addTest(key, feature[ key ]);
+          addTest(key, feature[key]);
         }
       }
     } else {
-
       feature = feature.toLowerCase();
-      var featureNameSplit = feature.split('.');
+      var featureNameSplit = feature.split(".");
       var last = Modernizr[featureNameSplit[0]];
 
       // Again, we don't check for parent test existence. Get that right, though.
@@ -473,7 +473,7 @@
         last = last[featureNameSplit[1]];
       }
 
-      if (typeof last != 'undefined') {
+      if (typeof last != "undefined") {
         // we're going to quit if you're trying to overwrite an existing test
         // if we were to allow it, we'd do this:
         //   var re = new RegExp("\\b(no-)?" + feature + "\\b");
@@ -482,22 +482,29 @@
         return Modernizr;
       }
 
-      test = typeof test == 'function' ? test() : test;
+      test = typeof test == "function" ? test() : test;
 
       // Set the value (this is the magic, right here).
       if (featureNameSplit.length == 1) {
         Modernizr[featureNameSplit[0]] = test;
       } else {
         // cast to a Boolean, if not one already
-        if (Modernizr[featureNameSplit[0]] && !(Modernizr[featureNameSplit[0]] instanceof Boolean)) {
-          Modernizr[featureNameSplit[0]] = new Boolean(Modernizr[featureNameSplit[0]]);
+        if (
+          Modernizr[featureNameSplit[0]] &&
+          !(Modernizr[featureNameSplit[0]] instanceof Boolean)
+        ) {
+          Modernizr[featureNameSplit[0]] = new Boolean(
+            Modernizr[featureNameSplit[0]]
+          );
         }
 
         Modernizr[featureNameSplit[0]][featureNameSplit[1]] = test;
       }
 
       // Set a single class (either `feature` or `no-feature`)
-      setClasses([(!!test && test != false ? '' : 'no-') + featureNameSplit.join('-')]);
+      setClasses([
+        (!!test && test != false ? "" : "no-") + featureNameSplit.join("-")
+      ]);
 
       // Trigger the event
       Modernizr._trigger(feature, test);
@@ -511,9 +518,6 @@
     ModernizrProto.addTest = addTest;
   });
 
-  
-
-
   /**
    * createElement is a convenience wrapper around document.createElement. Since we
    * use createElement all over the place, this allows for (slightly) smaller code
@@ -526,19 +530,22 @@
    */
 
   function createElement() {
-    if (typeof document.createElement !== 'function') {
+    if (typeof document.createElement !== "function") {
       // This is the case in IE7, where the type of createElement is "object".
       // For this reason, we cannot call apply() as Object is not a Function.
       return document.createElement(arguments[0]);
     } else if (isSVG) {
-      return document.createElementNS.call(document, 'http://www.w3.org/2000/svg', arguments[0]);
+      return document.createElementNS.call(
+        document,
+        "http://www.w3.org/2000/svg",
+        arguments[0]
+      );
     } else {
       return document.createElement.apply(document, arguments);
     }
   }
 
-  ;
-/*!
+  /*!
 {
   "name": "CSS Transform Style preserve-3d",
   "property": "preserve3d",
@@ -553,24 +560,26 @@
   }]
 }
 !*/
-/* DOC
+  /* DOC
 Detects support for `transform-style: preserve-3d`, for getting a proper 3D perspective on elements.
 */
 
-  Modernizr.addTest('preserve3d', function() {
+  Modernizr.addTest("preserve3d", function() {
     var outerAnchor, innerAnchor;
     var CSS = window.CSS;
     var result = false;
 
-    if (CSS && CSS.supports && CSS.supports('(transform-style: preserve-3d)')) {
+    if (CSS && CSS.supports && CSS.supports("(transform-style: preserve-3d)")) {
       return true;
     }
 
-    outerAnchor = createElement('a');
-    innerAnchor = createElement('a');
+    outerAnchor = createElement("a");
+    innerAnchor = createElement("a");
 
-    outerAnchor.style.cssText = 'display: block; transform-style: preserve-3d; transform-origin: right; transform: rotateY(40deg);';
-    innerAnchor.style.cssText = 'display: block; width: 9px; height: 1px; background: #000; transform-origin: right; transform: rotateY(40deg);';
+    outerAnchor.style.cssText =
+      "display: block; transform-style: preserve-3d; transform-origin: right; transform: rotateY(40deg);";
+    innerAnchor.style.cssText =
+      "display: block; width: 9px; height: 1px; background: #000; transform-origin: right; transform: rotateY(40deg);";
 
     outerAnchor.appendChild(innerAnchor);
     docElement.appendChild(outerAnchor);
@@ -581,7 +590,6 @@ Detects support for `transform-style: preserve-3d`, for getting a proper 3D pers
     result = result.width && result.width < 4;
     return result;
   });
-
 
   /**
    * getBody returns the body of a document, or an element that can stand in for
@@ -599,14 +607,12 @@ Detects support for `transform-style: preserve-3d`, for getting a proper 3D pers
 
     if (!body) {
       // Can't use the real body create a fake one.
-      body = createElement(isSVG ? 'svg' : 'body');
+      body = createElement(isSVG ? "svg" : "body");
       body.fake = true;
     }
 
     return body;
   }
-
-  ;
 
   /**
    * injectElementWithStyles injects an element with style element and some CSS rules
@@ -621,27 +627,27 @@ Detects support for `transform-style: preserve-3d`, for getting a proper 3D pers
    */
 
   function injectElementWithStyles(rule, callback, nodes, testnames) {
-    var mod = 'modernizr';
+    var mod = "modernizr";
     var style;
     var ret;
     var node;
     var docOverflow;
-    var div = createElement('div');
+    var div = createElement("div");
     var body = getBody();
 
     if (parseInt(nodes, 10)) {
       // In order not to give false positives we create a node for each test
       // This also allows the method to scale for unspecified uses
       while (nodes--) {
-        node = createElement('div');
+        node = createElement("div");
         node.id = testnames ? testnames[nodes] : mod + (nodes + 1);
         div.appendChild(node);
       }
     }
 
-    style = createElement('style');
-    style.type = 'text/css';
-    style.id = 's' + mod;
+    style = createElement("style");
+    style.type = "text/css";
+    style.id = "s" + mod;
 
     // IE6 will false positive on some tests due to the style element inside the test div somehow interfering offsetHeight, so insert it into body or fakebody.
     // Opera will act all quirky when injecting elements in documentElement when page is served as xml, needs fakebody too. #270
@@ -657,11 +663,11 @@ Detects support for `transform-style: preserve-3d`, for getting a proper 3D pers
 
     if (body.fake) {
       //avoid crashing IE8, if background image is used
-      body.style.background = '';
+      body.style.background = "";
       //Safari 5.13/5.1.4 OSX stops loading if ::-webkit-scrollbar is used and scrollbars are visible
-      body.style.overflow = 'hidden';
+      body.style.overflow = "hidden";
       docOverflow = docElement.style.overflow;
-      docElement.style.overflow = 'hidden';
+      docElement.style.overflow = "hidden";
       docElement.appendChild(body);
     }
 
@@ -678,10 +684,7 @@ Detects support for `transform-style: preserve-3d`, for getting a proper 3D pers
     }
 
     return !!ret;
-
   }
-
-  ;
 
   /**
    * testStyles injects an element with style element and some CSS rules
@@ -740,8 +743,7 @@ Detects support for `transform-style: preserve-3d`, for getting a proper 3D pers
    *
    */
 
-  var testStyles = ModernizrProto.testStyles = injectElementWithStyles;
-  
+  var testStyles = (ModernizrProto.testStyles = injectElementWithStyles);
 
   /**
    * If the browsers follow the spec, then they would expose vendor-specific styles as:
@@ -759,12 +761,12 @@ Detects support for `transform-style: preserve-3d`, for getting a proper 3D pers
    * @returns {string} The string representing the vendor-specific style properties
    */
 
-  var omPrefixes = 'Moz O ms Webkit';
-  
+  var omPrefixes = "Moz O ms Webkit";
 
-  var cssomPrefixes = (ModernizrProto._config.usePrefixes ? omPrefixes.split(' ') : []);
+  var cssomPrefixes = ModernizrProto._config.usePrefixes
+    ? omPrefixes.split(" ")
+    : [];
   ModernizrProto._cssomPrefixes = cssomPrefixes;
-  
 
   /**
    * atRule returns a given CSS property at-rule (eg @keyframes), possibly in
@@ -798,7 +800,7 @@ Detects support for `transform-style: preserve-3d`, for getting a proper 3D pers
     var cssrule = window.CSSRule;
     var rule;
 
-    if (typeof cssrule === 'undefined') {
+    if (typeof cssrule === "undefined") {
       return undefined;
     }
 
@@ -807,22 +809,22 @@ Detects support for `transform-style: preserve-3d`, for getting a proper 3D pers
     }
 
     // remove literal @ from beginning of provided property
-    prop = prop.replace(/^@/, '');
+    prop = prop.replace(/^@/, "");
 
     // CSSRules use underscores instead of dashes
-    rule = prop.replace(/-/g, '_').toUpperCase() + '_RULE';
+    rule = prop.replace(/-/g, "_").toUpperCase() + "_RULE";
 
     if (rule in cssrule) {
-      return '@' + prop;
+      return "@" + prop;
     }
 
     for (var i = 0; i < length; i++) {
       // prefixes gives us something like -o-, and we want O_
       var prefix = prefixes[i];
-      var thisRule = prefix.toUpperCase() + '_' + rule;
+      var thisRule = prefix.toUpperCase() + "_" + rule;
 
       if (thisRule in cssrule) {
-        return '@-' + prefix.toLowerCase() + '-' + prop;
+        return "@-" + prefix.toLowerCase() + "-" + prop;
       }
     }
 
@@ -830,8 +832,6 @@ Detects support for `transform-style: preserve-3d`, for getting a proper 3D pers
   };
 
   ModernizrProto.atRule = atRule;
-
-  
 
   /**
    * List of JavaScript DOM values used for tests
@@ -851,10 +851,10 @@ Detects support for `transform-style: preserve-3d`, for getting a proper 3D pers
    * ```
    */
 
-  var domPrefixes = (ModernizrProto._config.usePrefixes ? omPrefixes.toLowerCase().split(' ') : []);
+  var domPrefixes = ModernizrProto._config.usePrefixes
+    ? omPrefixes.toLowerCase().split(" ")
+    : [];
   ModernizrProto._domPrefixes = domPrefixes;
-  
-
 
   /**
    * contains checks to see if a string contains another string
@@ -867,10 +867,8 @@ Detects support for `transform-style: preserve-3d`, for getting a proper 3D pers
    */
 
   function contains(str, substr) {
-    return !!~('' + str).indexOf(substr);
+    return !!~("" + str).indexOf(substr);
   }
-
-  ;
 
   /**
    * fnBind is a super small [bind](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind) polyfill.
@@ -888,8 +886,6 @@ Detects support for `transform-style: preserve-3d`, for getting a proper 3D pers
     };
   }
 
-  ;
-
   /**
    * testDOMProps is a generic DOM property test; if a browser supports
    *   a certain property, it won't return undefined for it.
@@ -906,7 +902,6 @@ Detects support for `transform-style: preserve-3d`, for getting a proper 3D pers
 
     for (var i in props) {
       if (props[i] in obj) {
-
         // return the property name as a string
         if (elem === false) {
           return props[i];
@@ -915,7 +910,7 @@ Detects support for `transform-style: preserve-3d`, for getting a proper 3D pers
         item = obj[props[i]];
 
         // let's bind a function
-        if (is(item, 'function')) {
+        if (is(item, "function")) {
           // bind to obj unless overriden
           return fnBind(item, elem || obj);
         }
@@ -927,8 +922,6 @@ Detects support for `transform-style: preserve-3d`, for getting a proper 3D pers
     return false;
   }
 
-  ;
-
   /**
    * Create our "modernizr" element that we do most feature tests on.
    *
@@ -936,15 +929,13 @@ Detects support for `transform-style: preserve-3d`, for getting a proper 3D pers
    */
 
   var modElem = {
-    elem: createElement('modernizr')
+    elem: createElement("modernizr")
   };
 
   // Clean up this element
   Modernizr._q.push(function() {
     delete modElem.elem;
   });
-
-  
 
   var mStyle = {
     style: modElem.elem.style
@@ -955,8 +946,6 @@ Detects support for `transform-style: preserve-3d`, for getting a proper 3D pers
   Modernizr._q.unshift(function() {
     delete mStyle.style;
   });
-
-  
 
   /**
    * domToCSS takes a camelCase string and converts it to kebab-case
@@ -969,13 +958,12 @@ Detects support for `transform-style: preserve-3d`, for getting a proper 3D pers
    */
 
   function domToCSS(name) {
-    return name.replace(/([A-Z])/g, function(str, m1) {
-      return '-' + m1.toLowerCase();
-    }).replace(/^ms-/, '-ms-');
+    return name
+      .replace(/([A-Z])/g, function(str, m1) {
+        return "-" + m1.toLowerCase();
+      })
+      .replace(/^ms-/, "-ms-");
   }
-  ;
-
-
   /**
    * wrapper around getComputedStyle, to fix issues with Firefox returning null when
    * called inside of a hidden iframe
@@ -990,7 +978,7 @@ Detects support for `transform-style: preserve-3d`, for getting a proper 3D pers
   function computedStyle(elem, pseudo, prop) {
     var result;
 
-    if ('getComputedStyle' in window) {
+    if ("getComputedStyle" in window) {
       result = getComputedStyle.call(window, elem, pseudo);
       var console = window.console;
 
@@ -1000,8 +988,11 @@ Detects support for `transform-style: preserve-3d`, for getting a proper 3D pers
         }
       } else {
         if (console) {
-          var method = console.error ? 'error' : 'log';
-          console[method].call(console, 'getComputedStyle returning null, its possible modernizr test results are inaccurate');
+          var method = console.error ? "error" : "log";
+          console[method].call(
+            console,
+            "getComputedStyle returning null, its possible modernizr test results are inaccurate"
+          );
         }
       }
     } else {
@@ -1010,8 +1001,6 @@ Detects support for `transform-style: preserve-3d`, for getting a proper 3D pers
 
     return result;
   }
-
-  ;
 
   /**
    * nativeTestProps allows for us to use native feature detection functionality if available.
@@ -1029,7 +1018,7 @@ Detects support for `transform-style: preserve-3d`, for getting a proper 3D pers
   function nativeTestProps(props, value) {
     var i = props.length;
     // Start with the JS API: http://www.w3.org/TR/css3-conditional/#the-css-interface
-    if ('CSS' in window && 'supports' in window.CSS) {
+    if ("CSS" in window && "supports" in window.CSS) {
       // Try every prefixed variant of the property
       while (i--) {
         if (window.CSS.supports(domToCSS(props[i]), value)) {
@@ -1039,21 +1028,24 @@ Detects support for `transform-style: preserve-3d`, for getting a proper 3D pers
       return false;
     }
     // Otherwise fall back to at-rule (for Opera 12.x)
-    else if ('CSSSupportsRule' in window) {
+    else if ("CSSSupportsRule" in window) {
       // Build a condition string for every prefixed variant
       var conditionText = [];
       while (i--) {
-        conditionText.push('(' + domToCSS(props[i]) + ':' + value + ')');
+        conditionText.push("(" + domToCSS(props[i]) + ":" + value + ")");
       }
-      conditionText = conditionText.join(' or ');
-      return injectElementWithStyles('@supports (' + conditionText + ') { #modernizr { position: absolute; } }', function(node) {
-        return computedStyle(node, null, 'position') == 'absolute';
-      });
+      conditionText = conditionText.join(" or ");
+      return injectElementWithStyles(
+        "@supports (" +
+          conditionText +
+          ") { #modernizr { position: absolute; } }",
+        function(node) {
+          return computedStyle(node, null, "position") == "absolute";
+        }
+      );
     }
     return undefined;
   }
-  ;
-
   // testProps is a generic CSS / DOM property test.
 
   // In testing support for a given CSS property, it's legit to test:
@@ -1068,12 +1060,12 @@ Detects support for `transform-style: preserve-3d`, for getting a proper 3D pers
   // Property names can be provided in either camelCase or kebab-case.
 
   function testProps(props, prefixed, value, skipValueTest) {
-    skipValueTest = is(skipValueTest, 'undefined') ? false : skipValueTest;
+    skipValueTest = is(skipValueTest, "undefined") ? false : skipValueTest;
 
     // Try native detect first
-    if (!is(value, 'undefined')) {
+    if (!is(value, "undefined")) {
       var result = nativeTestProps(props, value);
-      if (!is(result, 'undefined')) {
+      if (!is(result, "undefined")) {
         return result;
       }
     }
@@ -1088,7 +1080,7 @@ Detects support for `transform-style: preserve-3d`, for getting a proper 3D pers
     // defined for valid tags. Therefore, if `modernizr` does not have one, we
     // fall back to a less used element and hope for the best.
     // for strict XHTML browsers the hardly used samp element is used
-    var elems = ['modernizr', 'tspan', 'samp'];
+    var elems = ["modernizr", "tspan", "samp"];
     while (!mStyle.style && elems.length) {
       afterInit = true;
       mStyle.modElem = createElement(elems.shift());
@@ -1108,17 +1100,15 @@ Detects support for `transform-style: preserve-3d`, for getting a proper 3D pers
       prop = props[i];
       before = mStyle.style[prop];
 
-      if (contains(prop, '-')) {
+      if (contains(prop, "-")) {
         prop = cssToDOM(prop);
       }
 
       if (mStyle.style[prop] !== undefined) {
-
         // If value to test has been passed in, do a set-and-check test.
         // 0 (integer) is a valid property value, so check that `value` isn't
         // undefined, rather than just checking it's truthy.
-        if (!skipValueTest && !is(value, 'undefined')) {
-
+        if (!skipValueTest && !is(value, "undefined")) {
           // Needs a try catch block because of old IE. This is slow, but will
           // be avoided in most cases because `skipValueTest` will be used.
           try {
@@ -1131,22 +1121,20 @@ Detects support for `transform-style: preserve-3d`, for getting a proper 3D pers
           // CSS.supports()
           if (mStyle.style[prop] != before) {
             cleanElems();
-            return prefixed == 'pfx' ? prop : true;
+            return prefixed == "pfx" ? prop : true;
           }
         }
         // Otherwise just return true, or the property name if this is a
         // `prefixed()` call
         else {
           cleanElems();
-          return prefixed == 'pfx' ? prop : true;
+          return prefixed == "pfx" ? prop : true;
         }
       }
     }
     cleanElems();
     return false;
   }
-
-  ;
 
   /**
    * testPropsAll tests a list of DOM properties we want to check against.
@@ -1164,17 +1152,18 @@ Detects support for `transform-style: preserve-3d`, for getting a proper 3D pers
    * @returns {false|string} returns the string version of the property, or false if it is unsupported
    */
   function testPropsAll(prop, prefixed, elem, value, skipValueTest) {
-
     var ucProp = prop.charAt(0).toUpperCase() + prop.slice(1),
-      props = (prop + ' ' + cssomPrefixes.join(ucProp + ' ') + ucProp).split(' ');
+      props = (prop + " " + cssomPrefixes.join(ucProp + " ") + ucProp).split(
+        " "
+      );
 
     // did they call .prefixed('boxSizing') or are we just testing a prop?
-    if (is(prefixed, 'string') || is(prefixed, 'undefined')) {
+    if (is(prefixed, "string") || is(prefixed, "undefined")) {
       return testProps(props, prefixed, value, skipValueTest);
 
       // otherwise, they called .prefixed('requestAnimationFrame', window[, elem])
     } else {
-      props = (prop + ' ' + (domPrefixes).join(ucProp + ' ') + ucProp).split(' ');
+      props = (prop + " " + domPrefixes.join(ucProp + " ") + ucProp).split(" ");
       return testDOMProps(props, prefixed, elem);
     }
   }
@@ -1185,8 +1174,6 @@ Detects support for `transform-style: preserve-3d`, for getting a proper 3D pers
   // Note that the property names must be provided in the camelCase variant.
   // Modernizr.testAllProps('boxSizing')
   ModernizrProto.testAllProps = testPropsAll;
-
-  
 
   /**
    * prefixed returns the prefixed or nonprefixed property name variant of your input
@@ -1253,24 +1240,22 @@ Detects support for `transform-style: preserve-3d`, for getting a proper 3D pers
    * If you want a similar lookup, but in kebab-case, you can use [prefixedCSS](#modernizr-prefixedcss).
    */
 
-  var prefixed = ModernizrProto.prefixed = function(prop, obj, elem) {
-    if (prop.indexOf('@') === 0) {
+  var prefixed = (ModernizrProto.prefixed = function(prop, obj, elem) {
+    if (prop.indexOf("@") === 0) {
       return atRule(prop);
     }
 
-    if (prop.indexOf('-') != -1) {
+    if (prop.indexOf("-") != -1) {
       // Convert kebab-case to camelCase
       prop = cssToDOM(prop);
     }
     if (!obj) {
-      return testPropsAll(prop, 'pfx');
+      return testPropsAll(prop, "pfx");
     } else {
       // Testing DOM property e.g. Modernizr.prefixed('requestAnimationFrame', window) // 'mozRequestAnimationFrame'
       return testPropsAll(prop, obj, elem);
     }
-  };
-
-  
+  });
 
   /**
    * testAllProps determines whether a given CSS property is supported in the browser
@@ -1313,8 +1298,8 @@ Detects support for `transform-style: preserve-3d`, for getting a proper 3D pers
     return testPropsAll(prop, undefined, undefined, value, skipValueTest);
   }
   ModernizrProto.testAllProps = testAllProps;
-  
-/*!
+
+  /*!
 {
   "name": "CSS Transforms 3D",
   "property": "csstransforms3d",
@@ -1326,11 +1311,11 @@ Detects support for `transform-style: preserve-3d`, for getting a proper 3D pers
 }
 !*/
 
-  Modernizr.addTest('csstransforms3d', function() {
-    return !!testAllProps('perspective', '1px', true);
+  Modernizr.addTest("csstransforms3d", function() {
+    return !!testAllProps("perspective", "1px", true);
   });
 
-/*!
+  /*!
 {
   "name": "CSS Transitions",
   "property": "csstransitions",
@@ -1339,8 +1324,7 @@ Detects support for `transform-style: preserve-3d`, for getting a proper 3D pers
 }
 !*/
 
-  Modernizr.addTest('csstransitions', testAllProps('transition', 'all', true));
-
+  Modernizr.addTest("csstransitions", testAllProps("transition", "all", true));
 
   // Run each test
   testRunner();
@@ -1355,8 +1339,4 @@ Detects support for `transform-style: preserve-3d`, for getting a proper 3D pers
 
   // Leak Modernizr namespace
   window.Modernizr = Modernizr;
-
-
-;
-
 })(window, document);

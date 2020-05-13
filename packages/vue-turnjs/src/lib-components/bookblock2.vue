@@ -14,7 +14,7 @@
 import $ from "jquery";
 import "../../lib/modernizr-custom.js";
 import "../../lib/jquerypp.custom.js";
-import "../../lib/jquery.bookblock.min.js";
+import "../../lib/jquery.bookblock.modified.js";
 import { nanoid } from "nanoid";
 
 export default {
@@ -43,9 +43,12 @@ export default {
       deep: true,
       immediate: true
     },
-    pages() {
-      console.log("here");
-      this.forceRerender(this.defaultOptions);
+    pages: {
+      handler() {
+        this.forceRerender(this.defaultOptions);
+      },
+      deep: true,
+      immediate: true
     }
   },
   computed: {
@@ -140,12 +143,13 @@ export default {
     forceRerender(val) {
       if (this.pages.length === 1) {
         val.autoplay = false;
-      } else {
-        val.autoplay = true;
       }
       this.nanoid = nanoid();
       this.componentKey += 1;
-      this.$nextTick(() => $(this.selector).bookblock(val));
+
+      this.$nextTick(() => {
+        $(this.selector).bookblock(val);
+      });
     }
   }
 };

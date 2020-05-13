@@ -1,6 +1,6 @@
 <script>
 import $ from "jquery";
-import "../../lib/turn.min.js";
+import "../../lib/turn.js";
 import { nanoid } from "nanoid";
 
 export default {

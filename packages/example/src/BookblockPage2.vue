@@ -45,6 +45,51 @@
         >Last page</a
       >
     </nav>
+    <Bookblock2
+      class="bb-bookblock"
+      ref="bookBlock2"
+      :options="bookblockOptions2"
+      :pages="pages"
+    >
+      <template v-slot:page="{ item, index }">
+        <div class="page">
+          <h1>Page {{ item + index }}</h1>
+          <p>
+            Lorem ipsum dolor sit amet, utinam audiam forensibus vim no, mel
+            solum graecis recusabo ei. Et viris placerat qui, ad quodsi eleifend
+            constituam eam. Ex iusto partiendo gubergren per, quis assentior
+            dissentias cum ad, te eruditi utroque dissentiunt qui. Ad vix debet
+            mucius iriure. Cu soleat facilis vim, sit nullam delenit ne. Sea
+            simul aliquam in, has augue soleat at.
+          </p>
+        </div>
+        <div class="page">
+          <h1>Page {{ item + index }}</h1>
+          <p>
+            Vis mollis consulatu et, has in facilisis posidonium. Minim choro ea
+            quo, iisque feugait consectetuer at mei. Ne ius omnium maiestatis,
+            et augue indoctum elaboraret cum. Ad his mutat munere, choro saperet
+            no quo. Duo ne adolescens consequuntur, etiam essent patrioque te
+            ius, legendos inimicus mea ex. Qui cu lorem comprehensam, cu
+            nominati sententiae definitionem eos.
+          </p>
+        </div>
+      </template>
+    </Bookblock2>
+    <nav>
+      <a id="bb-nav-first" href="javascript:" @click="bookblockRef.first()"
+        >First page</a
+      >
+      <a id="bb-nav-prev" href="javascript:" @click="bookblockRef.prev()"
+        >Previous</a
+      >
+      <a id="bb-nav-next" href="javascript:" @click="bookblockRef.next()"
+        >Next</a
+      >
+      <a id="bb-nav-last" href="javascript:" @click="bookblockRef.last()"
+        >Last page</a
+      >
+    </nav>
   </div>
 </template>
 
@@ -61,11 +106,17 @@ export default {
       bookblockOptions: {
         speed: 500,
         autoplay: true
+      },
+      bookblockOptions2: {
+        speed: 500,
+        autoplay: true
       }
     };
   },
   mounted() {
     setTimeout(() => {
+      this.pages.push(0);
+      this.pages.push(0);
       this.pages.push(0);
     }, 10000);
   },
