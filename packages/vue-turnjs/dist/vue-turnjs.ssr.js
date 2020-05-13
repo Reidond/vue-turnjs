@@ -2746,9 +2746,7 @@ function renderStyles(styles) {
                 '</style>';
     }
     return css;
-}
-//# sourceMappingURL=server.mjs.map
-/* script */
+}/* script */
 var __vue_script__ = script;
 /* template */
 
@@ -4863,7 +4861,6 @@ var __vue_component__ = /*#__PURE__*/normalizeComponent({
     } else {
       this.each(function () {
         var instance = $.data(this, "bookblock-".concat(this.dataset.uid));
-        debugger;
 
         if (instance) {
           instance._init(instance.options);

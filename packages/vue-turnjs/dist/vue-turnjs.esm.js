@@ -4714,7 +4714,6 @@ const __vue_component__ = /*#__PURE__*/normalizeComponent({
     } else {
       this.each(function () {
         var instance = $.data(this, `bookblock-${this.dataset.uid}`);
-        debugger;
 
         if (instance) {
           instance._init(instance.options);
