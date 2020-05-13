@@ -1,10 +1,28 @@
 {
   "name": "vue-turnjs",
   "version": "1.2.3",
-  "description": "",
+  "description": "A vue wrapper for turn.js and bookblock libraries.",
   "publishConfig": {
     "access": "public"
   },
+  "author": {
+    "name": "Andrii Shafar",
+    "email": "andreyshafar@gmail.com",
+    "url": "https://github.com/Reidond"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Reidond/vue-turnjs.git"
+  },
+  "contributors": [
+    "Pidfihurnyi Orest <orest988@gmail.com> (https://github.com/Orest-2)"
+  ],
+  "keywords": [
+    "vue",
+    "turn.js",
+    "bookblock",
+    "wrapper"
+  ],
   "licence": "LGPL-3.0-only",
   "main": "dist/vue-turnjs.ssr.js",
   "browser": "dist/vue-turnjs.esm.js",
