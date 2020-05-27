@@ -5030,7 +5030,6 @@ var script$2 = {
         val.autoplay = false;
       }
 
-      this.nanoid = nanoid();
       this.componentKey += 1;
       this.$nextTick(() => {
         $(this.selector).bookblock(val);
