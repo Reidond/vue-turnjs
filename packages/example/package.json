@@ -1,6 +1,6 @@
 {
   "name": "example",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "private": true,
   "publishConfig": {
     "access": "restricted"
@@ -17,7 +17,7 @@
     "core-js": "^3.6.4",
     "vue": "^2.6.11",
     "vue-router": "^3.1.6",
-    "vue-turnjs": "^1.2.5"
+    "vue-turnjs": "^1.2.6"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.3.0",
