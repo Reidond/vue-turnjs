@@ -80,15 +80,12 @@
       <a id="bb-nav-first" href="javascript:" @click="bookblockRef.first()"
         >First page</a
       >
-      <a id="bb-nav-prev" href="javascript:" @click="bookblockRef.prev()"
-        >Previous</a
-      >
-      <a id="bb-nav-next" href="javascript:" @click="bookblockRef.next()"
-        >Next</a
-      >
+      <a id="bb-nav-prev1" href="javascript:">Previous</a>
+      <a id="bb-nav-next1" href="javascript:">Next</a>
       <a id="bb-nav-last" href="javascript:" @click="bookblockRef.last()"
         >Last page</a
       >
+      <input type="file" />
     </nav>
   </div>
 </template>
@@ -109,7 +106,9 @@ export default {
       },
       bookblockOptions2: {
         speed: 500,
-        autoplay: true
+        autoplay: true,
+        nextEl: "#bb-nav-next1",
+        prevEl: "#bb-nav-prev1"
       }
     };
   },

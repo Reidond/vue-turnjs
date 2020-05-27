@@ -137,6 +137,8 @@
       this.options = $.extend(true, {}, $.BookBlock.defaults, options);
       // orientation class
       this.$el.addClass("bb-" + this.options.orientation);
+      this.jopaUid = this.$el[0].dataset.uid;
+      this.pluginName = `bookblock-${this.jopaUid}`;
       // items
       this.$items = this.$el.children(".bb-item").hide();
       // total items
@@ -158,7 +160,7 @@
         transition: "transitionend"
       };
       this.transEndEventName =
-        transEndEventNames[Modernizr.prefixed("transition")] + ".bookblock";
+        transEndEventNames[Modernizr.prefixed("transition")] + `.${this.pluginName}`;
       // support css 3d transforms && css transitions && Modernizr.csstransformspreserve3d
       this.support =
         Modernizr.csstransitions &&
@@ -177,7 +179,7 @@
 
       if (this.options.nextEl !== "") {
         $(this.options.nextEl).on(
-          "click.bookblock touchstart.bookblock",
+          `click.${this.pluginName} touchstart.${this.pluginName}`,
           function() {
             self._action("next");
             return false;
@@ -187,7 +189,7 @@
 
       if (this.options.prevEl !== "") {
         $(this.options.prevEl).on(
-          "click.bookblock touchstart.bookblock",
+          `click.${this.pluginName} touchstart.${this.pluginName}`,
           function() {
             self._action("prev");
             return false;
@@ -562,11 +564,11 @@
       this.$items.show();
 
       if (this.options.nextEl !== "") {
-        $(this.options.nextEl).off(".bookblock");
+        $(this.options.nextEl).off(`.${this.pluginName}`);
       }
 
       if (this.options.prevEl !== "") {
-        $(this.options.prevEl).off(".bookblock");
+        $(this.options.prevEl).off(`.${this.pluginName}`);
       }
 
       $window.off("debouncedresize");

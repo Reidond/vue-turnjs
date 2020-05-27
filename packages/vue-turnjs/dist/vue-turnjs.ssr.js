@@ -2746,7 +2746,9 @@ function renderStyles(styles) {
                 '</style>';
     }
     return css;
-}/* script */
+}
+//# sourceMappingURL=server.mjs.map
+/* script */
 var __vue_script__ = script;
 /* template */
 
@@ -4482,7 +4484,9 @@ var __vue_component__ = /*#__PURE__*/normalizeComponent({
       // options
       this.options = $.extend(true, {}, $.BookBlock.defaults, options); // orientation class
 
-      this.$el.addClass("bb-" + this.options.orientation); // items
+      this.$el.addClass("bb-" + this.options.orientation);
+      this.jopaUid = this.$el[0].dataset.uid;
+      this.pluginName = "bookblock-".concat(this.jopaUid); // items
 
       this.$items = this.$el.children(".bb-item").hide(); // total items
 
@@ -4503,7 +4507,7 @@ var __vue_component__ = /*#__PURE__*/normalizeComponent({
         msTransition: "MSTransitionEnd",
         transition: "transitionend"
       };
-      this.transEndEventName = transEndEventNames[Modernizr.prefixed("transition")] + ".bookblock"; // support css 3d transforms && css transitions && Modernizr.csstransformspreserve3d
+      this.transEndEventName = transEndEventNames[Modernizr.prefixed("transition")] + ".".concat(this.pluginName); // support css 3d transforms && css transitions && Modernizr.csstransformspreserve3d
 
       this.support = Modernizr.csstransitions && Modernizr.csstransforms3d && Modernizr.csstransformspreserve3d; // initialize/bind some events
 
@@ -4520,7 +4524,7 @@ var __vue_component__ = /*#__PURE__*/normalizeComponent({
       var self = this;
 
       if (this.options.nextEl !== "") {
-        $(this.options.nextEl).on("click.bookblock touchstart.bookblock", function () {
+        $(this.options.nextEl).on("click.".concat(this.pluginName, " touchstart.").concat(this.pluginName), function () {
           self._action("next");
 
           return false;
@@ -4528,7 +4532,7 @@ var __vue_component__ = /*#__PURE__*/normalizeComponent({
       }
 
       if (this.options.prevEl !== "") {
-        $(this.options.prevEl).on("click.bookblock touchstart.bookblock", function () {
+        $(this.options.prevEl).on("click.".concat(this.pluginName, " touchstart.").concat(this.pluginName), function () {
           self._action("prev");
 
           return false;
@@ -4823,11 +4827,11 @@ var __vue_component__ = /*#__PURE__*/normalizeComponent({
       this.$items.show();
 
       if (this.options.nextEl !== "") {
-        $(this.options.nextEl).off(".bookblock");
+        $(this.options.nextEl).off(".".concat(this.pluginName));
       }
 
       if (this.options.prevEl !== "") {
-        $(this.options.prevEl).off(".bookblock");
+        $(this.options.prevEl).off(".".concat(this.pluginName));
       }
 
       $window.off("debouncedresize");
@@ -4885,12 +4889,7 @@ var __vue_component__ = /*#__PURE__*/normalizeComponent({
     options: {
       type: Object,
       default: function _default() {}
-    } // different version
-    // pages: {
-    //   type: Array,
-    //   default: () => []
-    // }
-
+    }
   },
   watch: {
     defaultOptions: {
@@ -4899,12 +4898,7 @@ var __vue_component__ = /*#__PURE__*/normalizeComponent({
       },
       deep: true,
       immediate: true
-    } // different version
-    // pages() {
-    //   this.update();
-    //   // this.forceRerender(this.defaultOptions);
-    // }
-
+    }
   },
   computed: {
     uid: function uid() {
@@ -5015,7 +5009,7 @@ var __vue_staticRenderFns__$1 = [];
 
 var __vue_inject_styles__$1 = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-110c42a9_0", {
+  inject("data-v-d628cbae_0", {
     source: ".bb-bookblock{width:400px;height:300px;margin:0 auto;position:relative;z-index:100;-webkit-perspective:1300px;perspective:1300px;-webkit-backface-visibility:hidden;backface-visibility:hidden}.bb-page{position:absolute;-webkit-transform-style:preserve-3d;transform-style:preserve-3d;-webkit-transition-property:-webkit-transform;transition-property:transform}.bb-vertical .bb-page{width:50%;height:100%;left:50%;-webkit-transform-origin:left center;transform-origin:left center}.bb-horizontal .bb-page{width:100%;height:50%;top:50%;-webkit-transform-origin:center top;transform-origin:center top}.bb-content,.bb-inner,.bb-outer,.bb-page>div{position:absolute;height:100%;width:100%;top:0;left:0;-webkit-backface-visibility:hidden;backface-visibility:hidden}.bb-vertical .bb-content{width:200%}.bb-horizontal .bb-content{height:200%}.bb-page>div{width:100%;-webkit-transform-style:preserve-3d;transform-style:preserve-3d}.bb-vertical .bb-back{-webkit-transform:rotateY(-180deg);transform:rotateY(-180deg)}.bb-horizontal .bb-back{-webkit-transform:rotateX(-180deg);transform:rotateX(-180deg)}.bb-outer{width:100%;overflow:hidden;z-index:999}.bb-flipoverlay,.bb-overlay{background-color:rgba(0,0,0,.7);position:absolute;top:0;left:0;width:100%;height:100%;opacity:0}.bb-flipoverlay{background-color:rgba(0,0,0,.2)}.bb-bookblock.bb-vertical>div.bb-page:first-child,.bb-bookblock.bb-vertical>div.bb-page:first-child .bb-back{-webkit-transform:rotateY(180deg);transform:rotateY(180deg)}.bb-bookblock.bb-horizontal>div.bb-page:first-child,.bb-bookblock.bb-horizontal>div.bb-page:first-child .bb-back{-webkit-transform:rotateX(180deg);transform:rotateX(180deg)}.bb-content{background:#fff}.bb-vertical .bb-front .bb-content{left:-100%}.bb-horizontal .bb-front .bb-content{top:-100%}.bb-vertical .bb-flip-initial,.bb-vertical .bb-flip-next{-webkit-transform:rotateY(-180deg);transform:rotateY(-180deg)}.bb-vertical .bb-flip-prev{-webkit-transform:rotateY(0);transform:rotateY(0)}.bb-horizontal .bb-flip-initial,.bb-horizontal .bb-flip-next{-webkit-transform:rotateX(180deg);transform:rotateX(180deg)}.bb-horizontal .bb-flip-prev{-webkit-transform:rotateX(0);transform:rotateX(0)}.bb-vertical .bb-flip-next-end{-webkit-transform:rotateY(-15deg);transform:rotateY(-15deg)}.bb-vertical .bb-flip-prev-end{-webkit-transform:rotateY(-165deg);transform:rotateY(-165deg)}.bb-horizontal .bb-flip-next-end{-webkit-transform:rotateX(15deg);transform:rotateX(15deg)}.bb-horizontal .bb-flip-prev-end{-webkit-transform:rotateX(165deg);transform:rotateX(165deg)}.bb-item{width:100%;height:100%;position:absolute;top:0;left:0;display:none;background:#fff}.no-js .bb-bookblock,.no-js ul.bb-custom-grid li{width:auto;height:auto}.no-js .bb-item{display:block;position:relative}",
     map: undefined,
     media: undefined
@@ -5027,7 +5021,7 @@ var __vue_inject_styles__$1 = function __vue_inject_styles__(inject) {
 var __vue_scope_id__$1 = undefined;
 /* module identifier */
 
-var __vue_module_identifier__$1 = "data-v-110c42a9";
+var __vue_module_identifier__$1 = "data-v-d628cbae";
 /* functional template */
 
 var __vue_is_functional_template__$1 = false;

@@ -4335,7 +4335,9 @@ const __vue_component__ = /*#__PURE__*/normalizeComponent({
       // options
       this.options = $.extend(true, {}, $.BookBlock.defaults, options); // orientation class
 
-      this.$el.addClass("bb-" + this.options.orientation); // items
+      this.$el.addClass("bb-" + this.options.orientation);
+      this.jopaUid = this.$el[0].dataset.uid;
+      this.pluginName = `bookblock-${this.jopaUid}`; // items
 
       this.$items = this.$el.children(".bb-item").hide(); // total items
 
@@ -4356,7 +4358,7 @@ const __vue_component__ = /*#__PURE__*/normalizeComponent({
         msTransition: "MSTransitionEnd",
         transition: "transitionend"
       };
-      this.transEndEventName = transEndEventNames[Modernizr.prefixed("transition")] + ".bookblock"; // support css 3d transforms && css transitions && Modernizr.csstransformspreserve3d
+      this.transEndEventName = transEndEventNames[Modernizr.prefixed("transition")] + `.${this.pluginName}`; // support css 3d transforms && css transitions && Modernizr.csstransformspreserve3d
 
       this.support = Modernizr.csstransitions && Modernizr.csstransforms3d && Modernizr.csstransformspreserve3d; // initialize/bind some events
 
@@ -4373,7 +4375,7 @@ const __vue_component__ = /*#__PURE__*/normalizeComponent({
       var self = this;
 
       if (this.options.nextEl !== "") {
-        $(this.options.nextEl).on("click.bookblock touchstart.bookblock", function () {
+        $(this.options.nextEl).on(`click.${this.pluginName} touchstart.${this.pluginName}`, function () {
           self._action("next");
 
           return false;
@@ -4381,7 +4383,7 @@ const __vue_component__ = /*#__PURE__*/normalizeComponent({
       }
 
       if (this.options.prevEl !== "") {
-        $(this.options.prevEl).on("click.bookblock touchstart.bookblock", function () {
+        $(this.options.prevEl).on(`click.${this.pluginName} touchstart.${this.pluginName}`, function () {
           self._action("prev");
 
           return false;
@@ -4676,11 +4678,11 @@ const __vue_component__ = /*#__PURE__*/normalizeComponent({
       this.$items.show();
 
       if (this.options.nextEl !== "") {
-        $(this.options.nextEl).off(".bookblock");
+        $(this.options.nextEl).off(`.${this.pluginName}`);
       }
 
       if (this.options.prevEl !== "") {
-        $(this.options.prevEl).off(".bookblock");
+        $(this.options.prevEl).off(`.${this.pluginName}`);
       }
 
       $window.off("debouncedresize");
@@ -4743,12 +4745,7 @@ var script$1 = {
     options: {
       type: Object,
       default: () => {}
-    } // different version
-    // pages: {
-    //   type: Array,
-    //   default: () => []
-    // }
-
+    }
   },
   watch: {
     defaultOptions: {
@@ -4758,12 +4755,7 @@ var script$1 = {
 
       deep: true,
       immediate: true
-    } // different version
-    // pages() {
-    //   this.update();
-    //   // this.forceRerender(this.defaultOptions);
-    // }
-
+    }
   },
   computed: {
     uid() {
