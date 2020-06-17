@@ -16,7 +16,7 @@
         animationDuration: page.animationDuration + 's'
       }"
     >
-      <slot :page="page" :index="index"></slot>
+      <slot name="page" v-bind="{ page, index }"></slot>
       <i
         v-if="showPageIndex && startPageIndex <= index && endPageIndex >= index"
         class="index"
@@ -393,6 +393,7 @@ export default {
   }
 };
 </script>
-<style lang="scss" scoped>
+
+<style lang="scss">
 @import "./index.scss";
 </style>
