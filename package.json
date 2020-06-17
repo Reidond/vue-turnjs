@@ -7,6 +7,6 @@
     "lerna": "^3.20.2"
   },
   "scripts": {
-    "postpublish": "now ./packages/example"
+    "postpublish": "now ./packages/example && now --prod ./packages/example"
   }
 }
