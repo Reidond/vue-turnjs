@@ -8,7 +8,7 @@
   },
   "scripts": {
     "exec:vue-turnjs": "lerna exec --scope vue-turnjs yarn run",
-    "exec:example": "lerna exec --scope example yarn run",
+    "exec:examples": "lerna exec --scope examples yarn run",
     "postpublish": ""
   }
 }
