@@ -42,7 +42,7 @@
                   >
                     <span class="fc-date">{{ row.dataNum }}</span>
                     <span class="fc-weekday">{{ row.dateName }}</span>
-                    <div v-show="row.content">
+                    <div class="fc-content-data" v-show="row.content">
                       <span>{{ row.content }}</span>
                     </div>
                   </div>
@@ -58,10 +58,10 @@
       </template>
     </fw-bookblock2>
     <nav>
-      <a href="#" @click="bookblockRef.prev()">
+      <a class="pointer" @click="bookblockRef.prev()">
         <b-icon-arrow-left-short />
       </a>
-      <a href="#" @click="bookblockRef.next()">
+      <a class="pointer" @click="bookblockRef.next()">
         <b-icon-arrow-right-short />
       </a>
     </nav>
@@ -89,7 +89,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 @import "./styles/demo2.scss";
 @import "./styles/calendar.scss";
 </style>

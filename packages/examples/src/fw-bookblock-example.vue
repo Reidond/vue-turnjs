@@ -20,16 +20,16 @@
       </div>
     </fw-bookblock>
     <nav>
-      <a href="#" @click="bookblockRef.first()">
+      <a class="pointer" @click="bookblockRef.first()">
         <b-icon-arrow-left />
       </a>
-      <a href="#" @click="bookblockRef.prev()">
+      <a class="pointer" @click="bookblockRef.prev()">
         <b-icon-arrow-left-short />
       </a>
-      <a href="#" @click="bookblockRef.next()">
+      <a class="pointer" @click="bookblockRef.next()">
         <b-icon-arrow-right-short />
       </a>
-      <a href="#" @click="bookblockRef.last()">
+      <a class="pointer" @click="bookblockRef.last()">
         <b-icon-arrow-right />
       </a>
     </nav>
