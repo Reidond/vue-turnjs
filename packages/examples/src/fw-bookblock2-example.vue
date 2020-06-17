@@ -1,5 +1,5 @@
 <template>
-  <div class="bookblock-grid">
+  <div class="bb-custom-wrapper">
     <fw-bookblock2
       class="bb-bookblock"
       ref="bookBlock"
@@ -7,117 +7,79 @@
       :pages="pages"
     >
       <template v-slot:page="{ item, index }">
-        <div class="page">
-          <h1>Page {{ item + index }}</h1>
-          <p>
-            Lorem ipsum dolor sit amet, utinam audiam forensibus vim no, mel
-            solum graecis recusabo ei. Et viris placerat qui, ad quodsi eleifend
-            constituam eam. Ex iusto partiendo gubergren per, quis assentior
-            dissentias cum ad, te eruditi utroque dissentiunt qui. Ad vix debet
-            mucius iriure. Cu soleat facilis vim, sit nullam delenit ne. Sea
-            simul aliquam in, has augue soleat at.
-          </p>
-        </div>
-        <div class="page">
-          <h1>Page {{ item + index }}</h1>
-          <p>
-            Vis mollis consulatu et, has in facilisis posidonium. Minim choro ea
-            quo, iisque feugait consectetuer at mei. Ne ius omnium maiestatis,
-            et augue indoctum elaboraret cum. Ad his mutat munere, choro saperet
-            no quo. Duo ne adolescens consequuntur, etiam essent patrioque te
-            ius, legendos inimicus mea ex. Qui cu lorem comprehensam, cu
-            nominati sententiae definitionem eos.
-          </p>
-        </div>
-      </template>
-    </fw-bookblock2>
-    <nav>
-      <a id="bb-nav-first" href="javascript:" @click="bookblockRef.first()"
-        >First page</a
-      >
-      <a id="bb-nav-prev" href="javascript:" @click="bookblockRef.prev()"
-        >Previous</a
-      >
-      <a id="bb-nav-next" href="javascript:" @click="bookblockRef.next()"
-        >Next</a
-      >
-      <a id="bb-nav-last" href="javascript:" @click="bookblockRef.last()"
-        >Last page</a
-      >
-    </nav>
-    <fw-bookblock2
-      class="bb-bookblock"
-      ref="bookBlock2"
-      :options="bookblockOptions2"
-      :pages="pages"
-    >
-      <template v-slot:page="{ item, index }">
-        <div class="page">
-          <h1>Page {{ item + index }}</h1>
-          <p>
-            Lorem ipsum dolor sit amet, utinam audiam forensibus vim no, mel
-            solum graecis recusabo ei. Et viris placerat qui, ad quodsi eleifend
-            constituam eam. Ex iusto partiendo gubergren per, quis assentior
-            dissentias cum ad, te eruditi utroque dissentiunt qui. Ad vix debet
-            mucius iriure. Cu soleat facilis vim, sit nullam delenit ne. Sea
-            simul aliquam in, has augue soleat at.
-          </p>
-        </div>
-        <div class="page">
-          <h1>Page {{ item + index }}</h1>
-          <p>
-            Vis mollis consulatu et, has in facilisis posidonium. Minim choro ea
-            quo, iisque feugait consectetuer at mei. Ne ius omnium maiestatis,
-            et augue indoctum elaboraret cum. Ad his mutat munere, choro saperet
-            no quo. Duo ne adolescens consequuntur, etiam essent patrioque te
-            ius, legendos inimicus mea ex. Qui cu lorem comprehensam, cu
-            nominati sententiae definitionem eos.
-          </p>
+        <img
+          class="bb-custom-img"
+          :src="`/images/bookblock2/${index + 1}.jpg`"
+          :alt="`image${index}`"
+        />
+        <div class="fc-calendar-wrap">
+          <h2>{{ item.name }}</h2>
+          <div class="fc-calendar-container">
+            <div class="fc-calendar fc-five-rows">
+              <div class="fc-head">
+                <div>Monday</div>
+                <div>Tuesday</div>
+                <div>Wednesday</div>
+                <div>Thursday</div>
+                <div>Friday</div>
+                <div>Saturday</div>
+                <div>Sunday</div>
+              </div>
+              <div class="fc-body">
+                <div
+                  class="fc-row"
+                  v-for="(row, index) in item.rows"
+                  :key="`${item.name}_row_${index}`"
+                >
+                  <div
+                    v-for="index in row.emptyDivsStart"
+                    :key="`${item.name}_emptyDivStart_${index}`"
+                  ></div>
+                  <div
+                    class="fc-content"
+                    v-for="(row, index) in row.data"
+                    :key="`${item.name}_rowdata_${index}`"
+                  >
+                    <span class="fc-date">{{ row.dataNum }}</span>
+                    <span class="fc-weekday">{{ row.dateName }}</span>
+                    <div v-show="row.content">
+                      <span>{{ row.content }}</span>
+                    </div>
+                  </div>
+                  <div
+                    v-for="index in row.emptyDivsEnd"
+                    :key="`${item.name}_emptyDivEnd_${index}`"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </template>
     </fw-bookblock2>
     <nav>
-      <a id="bb-nav-first" href="javascript:" @click="bookblockRef.first()"
-        >First page</a
-      >
-      <a id="bb-nav-prev1" href="javascript:">Previous</a>
-      <a id="bb-nav-next1" href="javascript:">Next</a>
-      <a id="bb-nav-last" href="javascript:" @click="bookblockRef.last()"
-        >Last page</a
-      >
-      <input type="file" />
+      <a href="#" @click="bookblockRef.prev()">
+        <b-icon-arrow-left-short />
+      </a>
+      <a href="#" @click="bookblockRef.next()">
+        <b-icon-arrow-right-short />
+      </a>
     </nav>
   </div>
 </template>
 
 <script>
+import calendar from "./calendar.js";
+
 export default {
   data() {
     return {
-      pages: [],
+      pages: calendar,
       bookblockOptions: {
-        speed: 500,
-        autoplay: true
-      },
-      bookblockOptions2: {
-        speed: 500,
-        autoplay: true,
-        nextEl: "#bb-nav-next1",
-        prevEl: "#bb-nav-prev1"
+        orientation: "horizontal",
+        speed: 700
       }
     };
-  },
-  mounted() {
-    setTimeout(() => {
-      this.pages.push(0);
-      this.pages.push(0);
-      this.pages.push(0);
-    }, 10000);
-  },
-  watch: {
-    pages(val) {
-      this.bookblockOptions.autoplay = val.length > 0;
-    }
   },
   computed: {
     bookblockRef: function() {
@@ -128,11 +90,6 @@ export default {
 </script>
 
 <style scoped>
-.bookblock-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr 1fr;
-  align-items: center;
-  justify-content: center;
-}
+@import "./styles/demo2.scss";
+@import "./styles/calendar.scss";
 </style>

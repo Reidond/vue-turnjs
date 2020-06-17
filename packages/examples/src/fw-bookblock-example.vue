@@ -1,54 +1,37 @@
 <template>
-  <div class="bookblock-grid">
+  <div class="bb-custom-wrapper">
+    <h3>
+      Illustrations by
+      <a href="http://dribbble.com/kevinhowdeshell">Kevin Howdeshell</a>
+    </h3>
     <fw-bookblock
       class="bb-bookblock"
       ref="bookBlock"
       :options="bookblockOptions"
     >
-      <div class="bb-item">
-        <div class="page cover">
-          <h1>Cover</h1>
-          <p>lorem ipsum</p>
-        </div>
-      </div>
-      <div class="bb-item" v-for="(page, index) in pages" :key="page + index">
-        <div class="page">
-          <h1>Page {{ page + index }}</h1>
-          <p>
-            Lorem ipsum dolor sit amet, utinam audiam forensibus vim no, mel
-            solum graecis recusabo ei. Et viris placerat qui, ad quodsi eleifend
-            constituam eam. Ex iusto partiendo gubergren per, quis assentior
-            dissentias cum ad, te eruditi utroque dissentiunt qui. Ad vix debet
-            mucius iriure. Cu soleat facilis vim, sit nullam delenit ne. Sea
-            simul aliquam in, has augue soleat at.
-          </p>
-        </div>
-        <div class="page">
-          <h1>Page {{ page + index }}</h1>
-          <p>
-            Vis mollis consulatu et, has in facilisis posidonium. Minim choro ea
-            quo, iisque feugait consectetuer at mei. Ne ius omnium maiestatis,
-            et augue indoctum elaboraret cum. Ad his mutat munere, choro saperet
-            no quo. Duo ne adolescens consequuntur, etiam essent patrioque te
-            ius, legendos inimicus mea ex. Qui cu lorem comprehensam, cu
-            nominati sententiae definitionem eos.
-          </p>
-        </div>
+      <div
+        class="bb-item"
+        v-for="(page, index) in pages"
+        :key="`${page.href}_${page.src}_${index}`"
+      >
+        <a :href="page.href">
+          <img :src="page.src" :alt="`image${index}`" />
+        </a>
       </div>
     </fw-bookblock>
     <nav>
-      <a id="bb-nav-first" href="javascript:" @click="bookblockRef.first()"
-        >First page</a
-      >
-      <a id="bb-nav-prev" href="javascript:" @click="bookblockRef.prev()"
-        >Previous</a
-      >
-      <a id="bb-nav-next" href="javascript:" @click="bookblockRef.next()"
-        >Next</a
-      >
-      <a id="bb-nav-last" href="javascript:" @click="bookblockRef.last()"
-        >Last page</a
-      >
+      <a href="#" @click="bookblockRef.first()">
+        <b-icon-arrow-left />
+      </a>
+      <a href="#" @click="bookblockRef.prev()">
+        <b-icon-arrow-left-short />
+      </a>
+      <a href="#" @click="bookblockRef.next()">
+        <b-icon-arrow-right-short />
+      </a>
+      <a href="#" @click="bookblockRef.last()">
+        <b-icon-arrow-right />
+      </a>
     </nav>
   </div>
 </template>
@@ -57,18 +40,23 @@
 export default {
   data() {
     return {
-      pages: [],
+      pages: [
+        { href: "http://drbl.in/bKVq", src: "/images/bookblock/1.jpg" },
+        { href: "http://drbl.in/ciTX", src: "/images/bookblock/2.jpg" },
+        { href: "http://drbl.in/cLHx", src: "/images/bookblock/3.jpg" },
+        { href: "http://drbl.in/bAfn", src: "/images/bookblock/4.jpg" },
+        { href: "http://drbl.in/dcbE", src: "/images/bookblock/5.jpg" }
+      ],
       bookblockOptions: {
-        speed: 500,
-        autoplay: true
+        speed: 800,
+        shadowSides: 0.8,
+        shadowFlip: 0.7,
+        autoplay: true,
+        orientation: "vertical"
       }
     };
   },
-  mounted() {
-    setTimeout(() => {
-      this.pages.push(0);
-    }, 10000);
-  },
+  mounted() {},
   watch: {
     pages(val) {
       this.bookblockOptions.autoplay = val.length > 0;
@@ -82,12 +70,6 @@ export default {
 };
 </script>
 
-<style scoped>
-.bookblock-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr 1fr;
-  align-items: center;
-  justify-content: center;
-}
+<style lang="scss" scoped>
+@import "./styles/demo1.scss";
 </style>
