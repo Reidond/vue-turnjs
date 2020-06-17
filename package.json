@@ -7,6 +7,8 @@
     "lerna": "^3.20.2"
   },
   "scripts": {
+    "exec:vue-turnjs": "lerna exec --scope vue-turnjs yarn run",
+    "exec:example": "lerna exec --scope example yarn run",
     "postpublish": "now ./packages/example && now --prod ./packages/example"
   }
 }
