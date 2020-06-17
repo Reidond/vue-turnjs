@@ -5,10 +5,18 @@ import FwTurnExample from "./fw-turn-example.vue";
 import FwBookExample from "./fw-book-example.vue";
 
 const routes = [
-  { path: "/fw-bookblock-example", component: FwBookblockExample },
-  { path: "/fw-bookblock2-example", component: FwBookblock2Example },
-  { path: "/fw-turn-example", component: FwTurnExample },
-  { path: "/fw-book-example", component: FwBookExample }
+  {
+    name: "demo-1",
+    path: "/fw-bookblock-example",
+    component: FwBookblockExample
+  },
+  {
+    name: "demo-2",
+    path: "/fw-bookblock2-example",
+    component: FwBookblock2Example
+  },
+  { name: "demo-3", path: "/fw-turn-example", component: FwTurnExample },
+  { name: "demo-4", path: "/fw-book-example", component: FwBookExample }
 ];
 
 export const router = new VueRouter({

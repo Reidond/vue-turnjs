@@ -7,6 +7,8 @@ import "bootstrap-vue/dist/bootstrap-vue.css";
 import { FlippingWidgets } from "vue-turnjs";
 import "vue-turnjs/dist/vue-turnjs.esm.css";
 
+import "./styles/default.scss";
+
 import VueRouter from "vue-router";
 import { router } from "./router.js";
 
