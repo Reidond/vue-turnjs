@@ -9,7 +9,7 @@
   "scripts": {
     "exec:vue-turnjs": "lerna exec --scope vue-turnjs yarn run",
     "exec:examples": "lerna exec --scope vue-turnjs-examples yarn run",
-    "build": "yarn run exec:vue-turnjs build && yarn run exec:examples build",
+    "build": "lerna bootstrap && yarn run exec:vue-turnjs build && yarn run exec:examples build",
     "publish-ci": "lerna publish from-package -y --no-verify-access"
   },
   "dependencies": {
