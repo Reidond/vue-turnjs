@@ -34,11 +34,6 @@ export default {
     },
     defaultOptions() {
       return {
-        width: 800,
-        height: 600,
-        display: "double",
-        duration: 1800,
-        page: 1,
         when: {
           turning: (event, page, pageObj) => {
             this.currentPage = page;
@@ -75,11 +70,7 @@ export default {
 </script>
 
 <template>
-  <div class="flip-book" :key="componentKey" :data-uid="this.uid">
+  <div :key="componentKey" :data-uid="this.uid">
     <slot> </slot>
   </div>
 </template>
-
-<style lang="scss" scoped>
-@import "./index.scss";
-</style>
