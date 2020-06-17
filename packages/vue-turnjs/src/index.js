@@ -40,4 +40,8 @@ export { default as FwTurn } from "./components/turn/turn.vue";
 // backwards compat
 export { default as Turn } from "./components/turn/turn.vue";
 
+// export * from './components/book'
+export { BookPlugin } from "./components/book";
+export { default as FwBook } from "./components/book/book.vue";
+
 export default FlippingWidgets;

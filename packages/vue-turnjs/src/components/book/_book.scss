@@ -1,0 +1,204 @@
+/*Book style*/
+.fw-book {
+  width: 600px;
+  height: 350px;
+  border: 5px solid #1296db;
+  box-sizing: border-box;
+  border-radius: 10px;
+  position: relative;
+  perspective: 1500px;
+}
+.fw-book .fw-bookitem {
+  width: 50%;
+  height: 100%;
+  border-radius: 10px;
+  background: #ffffff;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.fw-book .fw-bookitem > .loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 30px;
+  height: 30px;
+  margin: auto;
+  animation: loading linear 1s infinite;
+}
+.fw-book .fw-bookitem .index {
+  position: absolute;
+  bottom: 5px;
+  font-style: normal;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  background: rgba(18, 150, 219, 0.4);
+  border-radius: 50%;
+}
+.fw-book .fw-bookitem .index.index-left {
+  left: 5px;
+}
+.fw-book .fw-bookitem .index.index-right {
+  right: 5px;
+}
+.fw-book .fw-bookitem.left {
+  left: 0;
+  right: initial;
+}
+.fw-book .fw-bookitem.right {
+  left: initial;
+  right: 0;
+}
+/*Elements that need to be animated are reversed at first, and the direction changes correctly after the animation*/
+.fw-book .fw-bookitem.rotate180.right-hidden *,
+.fw-book .fw-bookitem.rotate180.right-visible *,
+.fw-book .fw-bookitem.rotate180.left-hidden *,
+.fw-book .fw-bookitem.rotate180.left-visible * {
+  transform: rotateY(180deg);
+}
+/*Audio button position*/
+.fw-book .fw-bookitem.rotate180.right-hidden .index.index-left,
+.fw-book .fw-bookitem.rotate180.right-visible .index.index-left,
+.fw-book .fw-bookitem.rotate180.left-hidden .index.index-left,
+.fw-book .fw-bookitem.rotate180.left-visible .index.index-left {
+  left: initial;
+  right: 5px;
+}
+/*Page position*/
+.fw-book .fw-bookitem.rotate180.right-hidden .index.index-right,
+.fw-book .fw-bookitem.rotate180.right-visible .index.index-right,
+.fw-book .fw-bookitem.rotate180.left-hidden .index.index-right,
+.fw-book .fw-bookitem.rotate180.left-visible .index.index-right {
+  right: initial;
+  left: 5px;
+}
+/*The page level in the animation is very high*/
+.fw-book .fw-bookitem.right-hidden {
+  z-index: 99 !important;
+  transform-origin: right;
+  animation: right-hidden linear 1s 1 both;
+}
+.fw-book .fw-bookitem.right-visible {
+  z-index: 100 !important;
+  transform-origin: right;
+  animation: right-visible linear 1s 1 both;
+}
+.fw-book .fw-bookitem.left-hidden {
+  z-index: 99 !important;
+  transform-origin: left;
+  animation: left-hidden linear 1s 1 both;
+}
+.fw-book .fw-bookitem.left-visible {
+  z-index: 100 !important;
+  transform-origin: left;
+  animation: left-visible linear 1s 1 both;
+}
+/*The previous page with pages moving to the right gradually hides*/
+@keyframes right-hidden {
+  0% {
+    /*  Animation starts */
+    opacity: 1;
+    transform: rotate3d(0, 1, 0, 0deg);
+  }
+  50% {
+    opacity: 1;
+    box-shadow: 0px 0px 20px #333333;
+    transform: rotate3d(0, 1, 0, 90deg);
+  }
+  50.1% {
+    opacity: 0;
+    transform: rotate3d(0, 1, 0, 90deg);
+  }
+  100% {
+    /*  End of animation */
+    opacity: 0;
+    box-shadow: none;
+    transform: rotate3d(0, 1, 0, 180deg);
+  }
+}
+
+/*The next page of the book pages moving to the right gradually appears*/
+@keyframes right-visible {
+  0% {
+    /*  Animation starts */
+    opacity: 0;
+    transform: rotate3d(0, 1, 0, 0deg);
+  }
+  50% {
+    opacity: 0;
+    box-shadow: 0px 0px 20px #333333;
+    transform: rotate3d(0, 1, 0, 90deg);
+  }
+  50.1% {
+    opacity: 1;
+    transform: rotate3d(0, 1, 0, 90deg);
+  }
+  100% {
+    /*  End of animation */
+    opacity: 1;
+    box-shadow: none;
+    transform: rotate3d(0, 1, 0, 180deg);
+  }
+}
+
+/*The previous page with the pages moving to the left gradually hides*/
+@keyframes left-hidden {
+  0% {
+    /*  Animation starts */
+    opacity: 1;
+    transform: rotate3d(0, 1, 0, 0deg);
+  }
+  50% {
+    opacity: 1;
+    box-shadow: 0px 0px 20px #333333;
+    transform: rotate3d(0, 1, 0, -90deg);
+  }
+  50.1% {
+    opacity: 0;
+    transform: rotate3d(0, 1, 0, -90deg);
+  }
+  100% {
+    /*  End of animation */
+    opacity: 0;
+    box-shadow: none;
+    transform: rotate3d(0, 1, 0, -180deg);
+  }
+}
+
+/*The next page of pages moving to the left gradually appears*/
+@keyframes left-visible {
+  0% {
+    /*  Animation starts */
+    opacity: 0;
+    transform: rotate3d(0, 1, 0, 0deg);
+  }
+  50% {
+    opacity: 0;
+    box-shadow: 0px 0px 20px #333333;
+    transform: rotate3d(0, 1, 0, -90deg);
+  }
+  50.1% {
+    opacity: 1;
+    transform: rotate3d(0, 1, 0, -90deg);
+  }
+  100% {
+    /*  End of animation */
+    opacity: 1;
+    box-shadow: none;
+    transform: rotate3d(0, 1, 0, -180deg);
+  }
+}
+
+@keyframes loading {
+  from {
+    transform: rotateZ(0deg);
+  }
+  to {
+    transform: rotateZ(360deg);
+  }
+}
