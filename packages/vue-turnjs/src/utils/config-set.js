@@ -103,18 +103,18 @@ class BvConfig {
 }
 
 // Method for applying a global config
-export const setConfig = (config = {}, Vue = OurVue) => {
+export const setConfig = (config = {}, Vue = Vue) => {
   // Ensure we have a $bvConfig Object on the Vue prototype.
-  // We set on Vue and OurVue just in case consumer has not set an alias of `vue`.
-  Vue.prototype[PROP_NAME] = OurVue.prototype[PROP_NAME] =
-    Vue.prototype[PROP_NAME] || OurVue.prototype[PROP_NAME] || new BvConfig();
+  // We set on Vue and Vue just in case consumer has not set an alias of `vue`.
+  Vue.prototype[PROP_NAME] = Vue.prototype[PROP_NAME] =
+    Vue.prototype[PROP_NAME] || Vue.prototype[PROP_NAME] || new BvConfig();
   // Apply the config values
   Vue.prototype[PROP_NAME].setConfig(config);
 };
 
 // Method for resetting the user config. Exported for testing purposes only.
 export const resetConfig = () => {
-  if (OurVue.prototype[PROP_NAME] && OurVue.prototype[PROP_NAME].resetConfig) {
-    OurVue.prototype[PROP_NAME].resetConfig();
+  if (Vue.prototype[PROP_NAME] && Vue.prototype[PROP_NAME].resetConfig) {
+    Vue.prototype[PROP_NAME].resetConfig();
   }
 };

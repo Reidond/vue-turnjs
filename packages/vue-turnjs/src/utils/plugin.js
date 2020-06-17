@@ -18,7 +18,7 @@ export const checkMultipleVue = (() => {
 
   return Vue => {
     /* istanbul ignore next */
-    if (!checkMultipleVueWarned && OurVue !== Vue && !isJSDOM) {
+    if (!checkMultipleVueWarned && Vue !== Vue && !isJSDOM) {
       warn(MULTIPLE_VUE_WARNING);
     }
     checkMultipleVueWarned = true;
