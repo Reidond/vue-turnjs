@@ -1,6 +1,6 @@
 <template>
   <div class="bookblock-grid">
-    <Bookblock2
+    <fw-bookblock2
       class="bb-bookblock"
       ref="bookBlock"
       :options="bookblockOptions"
@@ -30,7 +30,7 @@
           </p>
         </div>
       </template>
-    </Bookblock2>
+    </fw-bookblock2>
     <nav>
       <a id="bb-nav-first" href="javascript:" @click="bookblockRef.first()"
         >First page</a
@@ -45,7 +45,7 @@
         >Last page</a
       >
     </nav>
-    <Bookblock2
+    <fw-bookblock2
       class="bb-bookblock"
       ref="bookBlock2"
       :options="bookblockOptions2"
@@ -75,7 +75,7 @@
           </p>
         </div>
       </template>
-    </Bookblock2>
+    </fw-bookblock2>
     <nav>
       <a id="bb-nav-first" href="javascript:" @click="bookblockRef.first()"
         >First page</a
@@ -91,12 +91,7 @@
 </template>
 
 <script>
-import { Bookblock2 } from "vue-turnjs";
-
 export default {
-  components: {
-    Bookblock2
-  },
   data() {
     return {
       pages: [],

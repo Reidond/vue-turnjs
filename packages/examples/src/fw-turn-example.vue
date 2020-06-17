@@ -2,7 +2,7 @@
   <div class="turn-grid">
     <div>
       <h1>Double display</h1>
-      <turn>
+      <fw-turn>
         <div class="flip_page_double hard">Turn.js</div>
         <div class="flip_page_double hard"></div>
         <div class="flip_page_double hard">Page 1</div>
@@ -11,11 +11,11 @@
         <div class="flip_page_double hard">Page 4</div>
         <div class="flip_page_double hard"></div>
         <div class="flip_page_double hard"></div>
-      </turn>
+      </fw-turn>
     </div>
     <div>
       <h1>Single display</h1>
-      <turn :options="{ display: display }">
+      <fw-turn :options="{ display: display }">
         <div class="flip_page_single">Turn.js</div>
         <div class="flip_page_single"></div>
         <div class="flip_page_single">Page 1</div>
@@ -24,17 +24,13 @@
         <div class="flip_page_single">Page 4</div>
         <div class="flip_page_single"></div>
         <div class="flip_page_single"></div>
-      </turn>
+      </fw-turn>
     </div>
   </div>
 </template>
 
 <script>
-import { Turn } from "vue-turnjs";
 export default {
-  components: {
-    Turn
-  },
   data() {
     return {
       display: "single"

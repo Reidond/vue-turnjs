@@ -7,9 +7,9 @@
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <b-nav-item to="/">Bookblock</b-nav-item>
-          <b-nav-item to="/bookblock2">Bookblock2</b-nav-item>
-          <b-nav-item to="/turnjs">Turn.js</b-nav-item>
+          <b-nav-item to="/fw-bookblock-example">Bookblock</b-nav-item>
+          <b-nav-item to="/fw-bookblock2-example">Bookblock2</b-nav-item>
+          <b-nav-item to="/fw-turn-example">Turn.js</b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
