@@ -12,9 +12,9 @@
       :autoNextPageDelayTime="1000"
       :loop="loop"
     >
-      <template scope="prop">
-        <img :src="prop.page.url" />
-        <p>{{ prop.page.title }}</p>
+      <template v-slot:page="page">
+        <img :src="page.url" />
+        <p>{{ page.title }}</p>
       </template>
     </fw-book>
   </div>
