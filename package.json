@@ -7,6 +7,11 @@
     "lerna": "^3.20.2"
   },
   "scripts": {
-    "postpublish": "now ./packages/example"
+    "exec:vue-turnjs": "lerna exec --scope vue-turnjs yarn run",
+    "exec:examples": "lerna exec --scope vue-turnjs-examples yarn run",
+    "publish-ci": "lerna publish from-package -y --no-verify-access"
+  },
+  "dependencies": {
+    "@changesets/cli": "^2.9.1"
   }
 }
