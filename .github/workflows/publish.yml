@@ -53,6 +53,6 @@ jobs:
           registry-url: https://npm.pkg.github.com/
           scope: "@reidond"
       - run: yarn
-      - run: yarn publish-ci
+        # - run: yarn publish-ci
         env:
           NODE_AUTH_TOKEN: ${{secrets.GH_TOKEN}}
