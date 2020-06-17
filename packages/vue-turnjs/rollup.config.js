@@ -10,6 +10,7 @@ import babel from "rollup-plugin-babel";
 import { terser } from "rollup-plugin-terser";
 import minimist from "minimist";
 import inject from "@rollup/plugin-inject";
+import sass from "rollup-plugin-sass";
 import css from "rollup-plugin-css-only";
 
 // Get browserslist config and remove ie from es build targets
@@ -38,7 +39,9 @@ const baseConfig = {
         jquery: "jquery",
         jQuery: "jquery",
         "window.jQuery": "jquery"
-      })
+      }),
+      sass(),
+      css()
     ],
     replace: {
       "process.env.NODE_ENV": JSON.stringify("production"),
@@ -94,7 +97,7 @@ if (!argv.format || argv.format === "es") {
       }),
       ...baseConfig.plugins.preVue,
       resolve(),
-      css(),
+
       vue(baseConfig.plugins.vue),
       babel({
         ...baseConfig.plugins.babel,
@@ -127,7 +130,7 @@ if (!argv.format || argv.format === "cjs") {
     },
     plugins: [
       ...baseConfig.plugins.preVue,
-      css(),
+
       vue({
         ...baseConfig.plugins.vue,
         template: {
@@ -156,7 +159,7 @@ if (!argv.format || argv.format === "iife") {
     },
     plugins: [
       ...baseConfig.plugins.preVue,
-      css(),
+
       vue(baseConfig.plugins.vue),
       babel(baseConfig.plugins.babel),
       commonjs(),

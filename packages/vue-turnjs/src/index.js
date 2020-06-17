@@ -1,36 +1,43 @@
-// Import vue components
-import * as components from './lib-components';
+import { componentsPlugin } from "./components";
+const { installFactory } = require("./utils/plugin");
 
-// install function executed by Vue.use()
-const install = function installVueTurnjs(Vue) {
-  if (install.installed) return;
-  install.installed = true;
-  Object.entries(components).forEach(([componentName, component]) => {
-    Vue.component(componentName, component);
-  });
-};
+const install = installFactory({
+  plugins: {
+    componentsPlugin
+  }
+});
 
-// Create module definition for Vue.use()
-const plugin = {
+const NAME = "FlippingWidgets";
+
+const FlippingWidgets = {
   install,
+  NAME
 };
 
-// To auto-install when vue is found
-// eslint-disable-next-line no-redeclare
-/* global window, global */
-let GlobalVue = null;
-if (typeof window !== 'undefined') {
-  GlobalVue = window.Vue;
-} else if (typeof global !== 'undefined') {
-  GlobalVue = global.Vue;
-}
-if (GlobalVue) {
-  GlobalVue.use(plugin);
-}
+// Installer exported in case the consumer does not import `default`
+// as the plugin in CommonJS build (or does not have interop enabled for CommonJS)
+// Both the following will work:
+//   FlippingWidgets = require('vue-turnjs')
+//   FlippingWidgets = require('vue-turnjs').default
+//   Vue.use(FlippingWidgets)
+export { install, NAME, FlippingWidgets };
 
-// Default export is library as a whole, registered via Vue.use()
-export default plugin;
+// export * from './components/bookblock'
+export { BookblockPlugin } from "./components/bookblock";
+export { default as FwBookblock } from "./components/bookblock/bookblock.vue";
+// backwards compat
+export { default as Bookblock } from "./components/bookblock/bookblock.vue";
 
-// To allow individual component use, export components
-// each can be registered via Vue.component()
-export * from './lib-components';
+// export * from './components/bookblock2'
+export { Bookblock2Plugin } from "./components/bookblock2";
+export { default as FwBookblock2 } from "./components/bookblock2/bookblock2.vue";
+// backwards compat
+export { default as Bookblock2 } from "./components/bookblock2/bookblock2.vue";
+
+// export * from './components/turn'
+export { TurnPlugin } from "./components/turn";
+export { default as FwTurn } from "./components/turn/turn.vue";
+// backwards compat
+export { default as Turn } from "./components/turn/turn.vue";
+
+export default FlippingWidgets;

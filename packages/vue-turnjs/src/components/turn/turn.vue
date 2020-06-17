@@ -80,11 +80,6 @@ export default {
   </div>
 </template>
 
-<style scoped>
-.flip-book {
-  width: 800px;
-  height: 600px;
-  position: relative;
-  margin: 10px;
-}
+<style lang="scss" scoped>
+@import "./index.scss";
 </style>
