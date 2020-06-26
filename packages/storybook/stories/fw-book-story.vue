@@ -19,7 +19,10 @@
 </template>
 
 <script>
+import { FwBook } from "vue-turnjs";
+
 export default {
+  components: { FwBook },
   data() {
     return {
       autoNextPage: true,

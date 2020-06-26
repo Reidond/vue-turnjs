@@ -73,8 +73,15 @@
 
 <script>
 import calendar from "./calendar.js";
+import { FwBookblock2 } from "vue-turnjs";
+import { BIconArrowLeftShort, BIconArrowRightShort } from "bootstrap-vue";
 
 export default {
+  components: {
+    FwBookblock2,
+    BIconArrowLeftShort,
+    BIconArrowRightShort
+  },
   data() {
     return {
       pages: calendar,

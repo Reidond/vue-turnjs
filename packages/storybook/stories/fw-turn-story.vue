@@ -12,7 +12,12 @@
 </template>
 
 <script>
+import { FwTurn } from "vue-turnjs";
+
 export default {
+  components: {
+    FwTurn
+  },
   data() {
     return {
       options: {

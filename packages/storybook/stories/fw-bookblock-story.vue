@@ -37,7 +37,22 @@
 </template>
 
 <script>
+import { FwBookblock } from "vue-turnjs";
+import {
+  BIconArrowLeft,
+  BIconArrowRight,
+  BIconArrowLeftShort,
+  BIconArrowRightShort
+} from "bootstrap-vue";
+
 export default {
+  components: {
+    FwBookblock,
+    BIconArrowLeft,
+    BIconArrowRight,
+    BIconArrowLeftShort,
+    BIconArrowRightShort
+  },
   data() {
     return {
       pages: [
