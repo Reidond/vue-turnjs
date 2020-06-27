@@ -9,6 +9,8 @@
 ![npm](https://img.shields.io/npm/dw/vue-turnjs)
 ![npm](https://img.shields.io/npm/v/vue-turnjs)
 
+📦 [NPM](https://www.npmjs.com/package/vue-turnjs)
+
 📖 [Docs](https://reidond.gitbook.io/vue-turnjs/)
 
 📚 [Storybook](https://vue-turnjs-storybook.netlify.app/)
