@@ -1,6 +1,6 @@
 {
   "name": "storybook",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "private": true,
   "publishConfig": {
     "access": "restricted"
@@ -15,7 +15,7 @@
     "bootstrap-vue": "^2.15.0",
     "core-js": "^3.6.5",
     "vue": "^2.6.11",
-    "vue-turnjs": "^1.3.1"
+    "vue-turnjs": "^1.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.10.3",
