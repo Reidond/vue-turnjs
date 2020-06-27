@@ -9,56 +9,11 @@
 ![npm](https://img.shields.io/npm/dw/vue-turnjs)
 ![npm](https://img.shields.io/npm/v/vue-turnjs)
 
-## Overview
+📦 [NPM](https://www.npmjs.com/package/vue-turnjs)
 
-A vue wrapper for turn.js and bookblock libraries.
+📖 [Docs](https://reidond.gitbook.io/vue-turnjs/)
 
-Contains this components:
-
-- **Bookblock** - somewhat old version made for compatibility
-- **Bookblock2** - new version with standard API, like in other Vue components out there
-- **Turn** - turn.js wrapper
-
-Original code is in packages/vue-turnjs/lib/ alongside with modified bookblock by us.
-
-See README.md in vue-turnjs package to more info.
-
-Most of this packages have API designed specialy for our purposes.
-
-We use modified version of bookblock jquery because original has some serious issues, in particular:
-
-- When element is initialized (means it has bookblock instance) original code assigns default options even if element has it`s own options
-
-```js
-this.each(function () {
-  var instance = $.data(this, "bookblock");
-  if (instance) {
-    instance._init();
-  } else {
-    instance = $.data(this, "bookblock", new $.BookBlock(options, this));
-  }
-});
-```
-
-- In original code two bookblock elements on the same page have same instances even if selector used by jquery is random. We fixed this by adding random id of selector to intance key
-
-_Original:_
-
-```js
-var instance = $.data(this, "bookblock");
-```
-
-_Modified:_
-
-```js
-var instance = $.data(this, `bookblock-${this.dataset.uid}`);
-```
-
-## Install
-
-```bash
-npm install vue-turnjs
-```
+📚 [Storybook](https://vue-turnjs-storybook.netlify.app/)
 
 ## Contributors ✨
 
