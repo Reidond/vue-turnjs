@@ -15,6 +15,10 @@
 
 📚 [Storybook](https://vue-turnjs-storybook.netlify.app/)
 
+## Contribution
+
+Feel free to grab an issue from the list, just remember to squash your commits before merge.
+
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
