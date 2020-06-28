@@ -58,7 +58,7 @@ export default {
 <style lang="scss">
 @import "./styles/demo1.scss";
 .fw-book {
-  width: 420px;
+  width: 720px;
   border-radius: 10px;
   position: relative;
   perspective: 1500px;
@@ -72,5 +72,8 @@ export default {
   position: absolute;
   top: 0;
   right: 0;
+  img {
+    width: 100%;
+  }
 }
 </style>
